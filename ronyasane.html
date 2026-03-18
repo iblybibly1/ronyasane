@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ronya Sane – Elämää hevosten kanssa / Life with Horses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--forest:#1c2b1e;--moss:#2f4232;--sage:#6b8c6e;--cream:#f5f0e8;--ivory:#faf7f2;--gold:#b8975a;--gold-light:#d4b07a;--warm-dark:#0f1a10;--text-body:#3a3028;--text-light:#7a7060;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:var(--ivory);color:var(--text-body);font-weight:300;overflow-x:hidden;cursor:none;}
+
+/* CUSTOM CURSOR */
+#cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .3s;}
+#cursor-ring{position:fixed;width:38px;height:38px;border:1px solid rgba(184,151,90,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s;}
+body.cx #cursor{width:44px;height:44px;background:rgba(184,151,90,.12);}
+body.cx #cursor-ring{opacity:0;}
+
+/* LANG BAR */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:.7rem 2.5rem;background:rgba(15,26,16,.93);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,151,90,.14);}
+.logo-mini{display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--gold);}
+.logo-mini svg{width:30px;height:30px;flex-shrink:0;}
+.logo-mini-name{font-family:'Cormorant Garamond',serif;font-size:.92rem;font-weight:300;letter-spacing:.12em;color:rgba(245,240,232,.65);}
+.lang-toggle{display:flex;border:1px solid rgba(184,151,90,.4);border-radius:2px;overflow:hidden;}
+.lang-btn{background:transparent;border:none;color:rgba(245,240,232,.4);font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.15em;padding:.32rem .85rem;cursor:none;transition:all .3s;}
+.lang-btn.active{background:var(--gold);color:var(--forest);}
+.lang-btn:hover:not(.active){color:var(--gold-light);}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;background:var(--warm-dark);overflow:hidden;display:flex;align-items:center;}
+#pcv{position:absolute;inset:0;z-index:1;pointer-events:none;}
+
+/* bg glow orbs */
+.orb{position:absolute;border-radius:50%;pointer-events:none;}
+.orb1{width:700px;height:700px;right:-15%;top:-25%;background:radial-gradient(circle,rgba(47,66,50,.38) 0%,transparent 68%);}
+.orb2{width:450px;height:450px;left:10%;bottom:-25%;background:radial-gradient(circle,rgba(184,151,90,.055) 0%,transparent 65%);}
+
+/* hero horse */
+.hero-horse{position:absolute;right:-3%;bottom:0;width:clamp(360px,50vw,700px);z-index:2;pointer-events:none;}
+.hero-horse svg{width:100%;height:auto;display:block;animation:breathe 8s ease-in-out infinite;}
+.hero-horse::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--warm-dark) 0%,transparent 38%);z-index:1;}
+@keyframes breathe{0%,100%{transform:scale(1) translateY(0);}50%{transform:scale(1.008) translateY(-5px);}}
+
+/* hero content layer */
+.hero-fg{position:relative;z-index:4;width:100%;padding:6.5rem 6% 5rem;}
+.hero-content{max-width:640px;}
+
+/* hero logo mark */
+.h-logo{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem;opacity:0;animation:wup .7s ease .2s forwards;}
+.h-logo svg{width:62px;height:62px;color:var(--gold);flex-shrink:0;}
+.h-logo-text{display:flex;flex-direction:column;}
+.h-logo-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;letter-spacing:.2em;color:var(--cream);}
+.h-logo-sub{font-size:.58rem;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;font-weight:400;margin-top:.12rem;}
+
+/* hero eyebrow */
+.h-eye{font-size:.68rem;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;font-weight:400;margin-bottom:1.4rem;display:flex;align-items:center;gap:.8rem;opacity:0;animation:wup .7s ease .45s forwards;}
+.h-eye::before{content:'';width:26px;height:1px;background:var(--gold);opacity:.55;}
+
+/* hero title */
+.h-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3.6rem,7.2vw,6.8rem);line-height:.96;color:var(--cream);margin-bottom:1.4rem;}
+.tline{display:block;overflow:hidden;}
+.tw{display:inline-block;opacity:0;transform:translateY(105%);animation:sup .88s cubic-bezier(.16,1,.3,1) forwards;}
+.tw.g{color:var(--gold-light);font-style:italic;}
+.d1{animation-delay:.55s;}.d2{animation-delay:.72s;}.d3{animation-delay:.88s;}
+
+/* hero tagline / location */
+.h-tag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,1.9vw,1.38rem);color:rgba(245,240,232,.42);margin-bottom:.7rem;font-weight:300;opacity:0;animation:wup .7s ease 1.1s forwards;}
+.h-loc{display:flex;align-items:center;gap:.55rem;color:rgba(245,240,232,.25);font-size:.72rem;letter-spacing:.1em;margin-bottom:3rem;opacity:0;animation:wup .7s ease 1.25s forwards;}
+.h-loc::before{content:'';width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+
+/* CTA */
+.h-cta{display:inline-flex;align-items:center;gap:.9rem;background:transparent;border:1px solid var(--gold);color:var(--gold);font-family:'Jost',sans-serif;font-weight:400;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;padding:1rem 2.4rem;text-decoration:none;transition:all .35s;opacity:0;animation:wup .7s ease 1.4s forwards;cursor:none;position:relative;}
+.h-cta:hover{background:var(--gold);color:var(--forest);}
+.h-cta .ar{transition:transform .3s;}
+.h-cta:hover .ar{transform:translateX(5px);}
+
+/* scroll indicator */
+.scroll-ind{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;z-index:5;opacity:0;animation:wup .8s ease 2s forwards;}
+.scroll-track{width:1px;height:46px;background:rgba(184,151,90,.12);overflow:hidden;position:relative;}
+.scroll-track::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,var(--gold),transparent);animation:sdrop 2.2s ease-in-out infinite;}
+.scroll-lbl{font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(245,240,232,.2);writing-mode:vertical-rl;}
+@keyframes sdrop{0%{transform:translateY(-100%);}100%{transform:translateY(100%);}}
+
+/* KEYFRAMES */
+@keyframes sup{from{opacity:0;transform:translateY(105%);}to{opacity:1;transform:translateY(0);}}
+@keyframes wup{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* NAV */
+.site-nav{position:sticky;top:42px;z-index:900;background:rgba(245,240,232,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(27,43,30,.1);display:flex;justify-content:center;}
+.nav-link{font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-light);text-decoration:none;padding:1.1rem 2rem;transition:color .3s;position:relative;cursor:none;}
+.nav-link::after{content:'';position:absolute;bottom:0;left:50%;right:50%;height:2px;background:var(--gold);transition:all .3s;}
+.nav-link:hover{color:var(--forest);}
+.nav-link:hover::after{left:1.5rem;right:1.5rem;}
+
+/* SECTIONS */
+section{padding:7rem 6%;}
+.sec-lbl{font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:flex;align-items:center;gap:1rem;font-weight:400;}
+.sec-lbl::after{content:'';flex:1;max-width:60px;height:1px;background:var(--gold);opacity:.4;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.4rem,4.5vw,3.8rem);line-height:1.08;color:var(--forest);margin-bottom:.5rem;}
+.sec-title em{font-style:italic;color:var(--sage);}
+
+/* ABOUT */
+#about{background:var(--ivory);}
+.about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:start;margin-top:4rem;}
+.portrait-frame{width:100%;aspect-ratio:3/4;background:var(--forest);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.portrait-wm{width:68%;opacity:.1;}
+.portrait-accent{position:absolute;bottom:-16px;right:-16px;width:70%;height:70%;border:1px solid rgba(184,151,90,.28);pointer-events:none;}
+.portrait-accent::before{content:'';position:absolute;top:-1px;left:-1px;width:20px;height:20px;border-top:1px solid var(--gold);border-left:1px solid var(--gold);}
+.astat{display:flex;align-items:baseline;gap:.4rem;padding-top:2rem;}
+.astat-n{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--gold);line-height:1;}
+.astat-l{font-size:.77rem;color:var(--text-light);letter-spacing:.05em;}
+.about-text p{font-size:.96rem;line-height:1.9;color:#4a4238;margin-bottom:1.2rem;}
+.about-text .lead{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--forest);line-height:1.6;}
+.about-cred{margin-top:2rem;padding:1.5rem;border-left:2px solid var(--gold);background:rgba(184,151,90,.04);}
+.about-cred p{font-size:.81rem!important;color:var(--text-light)!important;font-style:italic;margin:0!important;line-height:1.7!important;}
+
+/* HORSES */
+#horses{background:var(--forest);}
+#horses .sec-lbl{color:var(--gold-light);}
+#horses .sec-title{color:var(--cream);}
+#horses .sec-title em{color:var(--sage);filter:brightness(1.4);}
+.horses-intro{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;color:rgba(245,240,232,.52);max-width:560px;line-height:1.7;margin-bottom:4rem;font-style:italic;}
+.horses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5px;}
+.hcard{background:var(--moss);padding:2.2rem 2rem;position:relative;transition:background .4s;border:1px solid rgba(184,151,90,.07);cursor:none;}
+.hcard:hover{background:rgba(47,66,50,.85);}
+.hcard::before{content:attr(data-year);position:absolute;top:1.5rem;right:1.5rem;font-family:'Cormorant Garamond',serif;font-size:.7rem;color:rgba(184,151,90,.33);letter-spacing:.08em;}
+.hname{font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;color:var(--cream);margin-bottom:.3rem;}
+.hbreed{font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;font-weight:400;}
+.hdesc{font-size:.83rem;line-height:1.75;color:rgba(245,240,232,.46);}
+.hstat{display:inline-block;margin-top:1.2rem;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;padding:.28rem .8rem;border:1px solid rgba(184,151,90,.26);color:var(--gold);border-radius:20px;}
+
+/* SERVICES */
+#services{background:var(--cream);}
+.svc-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem;flex-wrap:wrap;gap:1rem;}
+.svc-note{font-size:.78rem;color:var(--text-light);max-width:310px;line-height:1.7;border-left:2px solid var(--gold);padding-left:1rem;opacity:.7;}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.scard{background:var(--ivory);border:1px solid rgba(27,43,30,.08);padding:2.5rem 2.2rem;transition:box-shadow .3s,transform .3s;cursor:none;}
+.scard:hover{box-shadow:0 12px 40px rgba(27,43,30,.08);transform:translateY(-3px);}
+.scard.feat{background:var(--forest);border-color:var(--forest);grid-column:span 2;}
+.sico{width:42px;height:42px;border:1px solid rgba(184,151,90,.38);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1.6rem;color:var(--gold);}
+.sname{font-family:'Cormorant Garamond',serif;font-size:1.42rem;font-weight:400;color:var(--forest);margin-bottom:.7rem;line-height:1.2;}
+.scard.feat .sname{color:var(--cream);}
+.sdesc{font-size:.82rem;color:var(--text-light);line-height:1.8;margin-bottom:1.5rem;}
+.scard.feat .sdesc{color:rgba(245,240,232,.48);}
+.sprice{display:inline-flex;align-items:baseline;gap:.2rem;}
+.spnum{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--gold);line-height:1;}
+.spunit{font-size:.68rem;color:var(--text-light);}
+.scard.feat .spunit{color:rgba(245,240,232,.35);}
+.slist{list-style:none;margin-top:.8rem;}
+.slist li{font-size:.81rem;color:rgba(245,240,232,.48);padding:.34rem 0;border-bottom:1px solid rgba(245,240,232,.05);display:flex;align-items:center;gap:.6rem;}
+.slist li::before{content:'—';color:var(--gold);opacity:.55;font-size:.68rem;}
+.visits{margin-top:4rem;background:var(--forest);padding:3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+.vtitle{font-family:'Cormorant Garamond',serif;font-size:1.85rem;font-weight:300;color:var(--cream);margin-bottom:1rem;}
+.vdesc{font-size:.84rem;color:rgba(245,240,232,.46);line-height:1.8;}
+.vprices{display:flex;flex-direction:column;gap:.8rem;}
+.vrow{display:flex;justify-content:space-between;align-items:center;padding:.88rem 1.2rem;border:1px solid rgba(184,151,90,.11);}
+.vlbl{font-size:.8rem;color:rgba(245,240,232,.52);}
+.vval{font-family:'Cormorant Garamond',serif;font-size:1.38rem;color:var(--gold);font-weight:300;}
+.pay-strip{background:var(--moss);padding:1.5rem 6%;display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap;margin-top:2rem;}
+.pm{display:flex;align-items:center;gap:.5rem;font-size:.76rem;color:rgba(245,240,232,.42);}
+.pm .ic{color:var(--gold);}
+
+/* CONTACT */
+#contact{background:var(--warm-dark);padding:7rem 6%;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+#contact .sec-lbl{color:var(--gold-light);}
+#contact .sec-title{color:var(--cream);}
+.c-tag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.18rem;color:rgba(245,240,232,.38);margin-top:1.2rem;line-height:1.7;max-width:400px;}
+.c-details{margin-top:3rem;display:flex;flex-direction:column;gap:1.5rem;}
+.citem{display:flex;align-items:flex-start;gap:1.2rem;}
+.cico{width:36px;height:36px;border:1px solid rgba(184,151,90,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.88rem;flex-shrink:0;margin-top:.15rem;}
+.ctext strong{display:block;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:.3rem;}
+.ctext p{font-size:.88rem;color:rgba(245,240,232,.42);line-height:1.6;}
+.cform{display:flex;flex-direction:column;gap:1rem;}
+.ff{display:flex;flex-direction:column;gap:.38rem;}
+.ff label{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,240,232,.28);}
+.ff input,.ff textarea,.ff select{background:rgba(255,255,255,.03);border:1px solid rgba(184,151,90,.12);color:var(--cream);font-family:'Jost',sans-serif;font-size:.86rem;font-weight:300;padding:.84rem 1rem;transition:border-color .3s;outline:none;width:100%;resize:none;cursor:none;}
+.ff input::placeholder,.ff textarea::placeholder{color:rgba(245,240,232,.16);}
+.ff input:focus,.ff textarea:focus,.ff select:focus{border-color:rgba(184,151,90,.42);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.sbtn{background:var(--gold);border:none;color:var(--forest);font-family:'Jost',sans-serif;font-weight:500;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;padding:1.1rem 2.5rem;cursor:none;transition:background .3s,transform .2s;align-self:flex-start;margin-top:.5rem;}
+.sbtn:hover{background:var(--gold-light);transform:translateY(-2px);}
+.fnote{font-size:.7rem;color:rgba(245,240,232,.2);line-height:1.6;margin-top:.3rem;}
+
+/* FOOTER */
+footer{background:var(--warm-dark);border-top:1px solid rgba(184,151,90,.1);padding:2rem 6%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.fbrand{font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(245,240,232,.26);font-weight:300;letter-spacing:.05em;}
+.fcopy{font-size:.65rem;letter-spacing:.1em;color:rgba(245,240,232,.14);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* LANGUAGE */
+body.lang-en .fi-text{display:none;}
+body.lang-fi .en-text{display:none;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr;gap:3rem;}
+  .portrait-frame{aspect-ratio:4/3;}
+  .scard.feat{grid-column:span 1;}
+  .visits{grid-template-columns:1fr;gap:2rem;}
+  #contact{grid-template-columns:1fr;gap:3rem;}
+  .hero-horse{width:clamp(260px,68vw,480px);opacity:.35;}
+  .lang-bar{padding:.7rem 1.5rem;}
+}
+@media(max-width:600px){
+  section{padding:5rem 5%;}
+  .hero-fg{padding:7rem 5% 4rem;}
+  .frow{grid-template-columns:1fr;}
+  .site-nav{gap:0;}
+  .nav-link{padding:1rem .8rem;font-size:.62rem;}
+  .pay-strip{gap:1.5rem;}
+}
+</style>
+</head>
+<body class="lang-fi">
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ══ LANG BAR ══ -->
+<div class="lang-bar">
+  <a href="#top" class="logo-mini">
+    <svg viewBox="0 0 80 80" fill="none">
+      <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="1"/>
+      <circle cx="40" cy="40" r="28" stroke="currentColor" stroke-width="0.5" opacity="0.45"/>
+      <line x1="20" y1="40" x2="60" y2="40" stroke="currentColor" stroke-width="0.5" opacity="0.2"/>
+      <text x="40" y="51" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="28" font-weight="300" font-style="italic" fill="currentColor">RS</text>
+    </svg>
+    <span class="logo-mini-name">Ronya Sane</span>
+  </a>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('fi')">FI</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="top">
+  <canvas id="pcv"></canvas>
+
+  <!-- bg orbs -->
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+
+  <!-- Horse silhouette -->
+  <div class="hero-horse" id="horse-wrap">
+    <svg viewBox="0 0 500 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#b8975a" opacity="0.14">
+        <ellipse cx="268" cy="358" rx="162" ry="90" transform="rotate(-6 268 358)"/>
+        <ellipse cx="378" cy="338" rx="82" ry="76" transform="rotate(4 378 338)"/>
+        <ellipse cx="158" cy="338" rx="72" ry="66"/>
+        <path d="M154 293C139 263 129 226 137 193C144 166 161 150 174 152C187 154 184 180 179 208C174 236 168 266 154 293Z"/>
+        <ellipse cx="166" cy="143" rx="53" ry="63" transform="rotate(-22 166 143)"/>
+        <ellipse cx="208" cy="173" rx="31" ry="23" transform="rotate(-15 208 173)"/>
+        <polygon points="146,86 136,50 160,84"/>
+        <polygon points="163,80 170,42 183,78"/>
+        <circle cx="176" cy="124" r="8" fill="#1c2b1e"/>
+        <circle cx="178" cy="122" r="2.8" fill="#b8975a" opacity="0.35"/>
+        <ellipse cx="206" cy="176" rx="5" ry="3.5" fill="#1c2b1e" opacity="0.5" transform="rotate(-20 206 176)"/>
+        <path d="M143 416C140 448 138 490 137 528C136 556 140 570 145 571C150 572 153 558 152 530C151 496 154 456 156 424Z"/>
+        <path d="M170 420C168 453 167 495 167 532C167 560 171 573 176 572C181 571 183 558 182 531C181 498 183 458 186 426Z"/>
+        <path d="M316 422C312 453 310 493 309 528C308 556 312 570 317 570C322 570 324 556 323 528C322 496 324 458 328 426Z"/>
+        <path d="M346 418C343 450 342 491 342 526C342 554 346 568 351 568C356 568 358 554 356 526C355 496 358 458 362 422Z"/>
+        <ellipse cx="144" cy="573" rx="13" ry="5.5"/>
+        <ellipse cx="175" cy="574" rx="13" ry="5.5"/>
+        <ellipse cx="316" cy="572" rx="13" ry="5.5"/>
+        <ellipse cx="350" cy="570" rx="13" ry="5.5"/>
+        <path d="M428 316C460 298 478 328 470 363C462 398 444 418 430 406" fill="none" stroke="#b8975a" stroke-width="30" stroke-linecap="round" opacity="0.14"/>
+        <path d="M424 316C454 302 471 332 463 367C455 402 436 422 422 408" fill="none" stroke="#b8975a" stroke-width="18" stroke-linecap="round" opacity="0.09"/>
+        <path d="M160 98C166 128 170 160 176 186" fill="none" stroke="#0a1309" stroke-width="11" stroke-linecap="round" opacity="0.28"/>
+        <path d="M170 94C176 124 180 156 184 182" fill="none" stroke="#0a1309" stroke-width="7" stroke-linecap="round" opacity="0.2"/>
+        <path d="M180 92C184 120 186 150 190 176" fill="none" stroke="#0a1309" stroke-width="5" stroke-linecap="round" opacity="0.14"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Content -->
+  <div class="hero-fg" id="layer-fg">
+    <div class="hero-content">
+
+      <!-- Logo mark in hero -->
+      <div class="h-logo">
+        <svg viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="1"/>
+          <circle cx="40" cy="40" r="28" stroke="currentColor" stroke-width="0.5" opacity="0.5"/>
+          <line x1="18" y1="40" x2="62" y2="40" stroke="currentColor" stroke-width="0.5" opacity="0.22"/>
+          <text x="40" y="51" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="30" font-weight="300" font-style="italic" fill="currentColor">RS</text>
+        </svg>
+        <div class="h-logo-text">
+          <span class="h-logo-name">Ronya Sane</span>
+          <span class="h-logo-sub">Tmi · Degerby, Inkoo</span>
+        </div>
+      </div>
+
+      <!-- Eyebrow -->
+      <div class="h-eye fi-text">Hevosalan palvelut</div>
+      <div class="h-eye en-text">Equestrian services</div>
+
+      <!-- Title words animate in separately -->
+      <h1 class="h-title">
+        <span class="tline"><span class="tw d1">Elämää</span></span>
+        <span class="tline fi-text"><span class="tw g d2">hevosten</span></span>
+        <span class="tline fi-text"><span class="tw d3">kanssa</span></span>
+        <span class="tline en-text"><span class="tw g d2">with</span>&nbsp;<span class="tw d3" style="font-style:italic;color:var(--gold-light);">horses</span></span>
+      </h1>
+
+      <p class="h-tag fi-text">Yli 20 vuoden kokemuksella.</p>
+      <p class="h-tag en-text">Over 20 years of experience.</p>
+      <div class="h-loc fi-text">Kopparnäsin virkistysalueen lähellä · Degerby, Inkoo</div>
+      <div class="h-loc en-text">Near Kopparnäs · Degerby, Inkoo</div>
+
+      <a href="#services" class="h-cta" id="cta-btn">
+        <span class="fi-text">Tutustu palveluihin</span>
+        <span class="en-text">View services</span>
+        <span class="ar">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="scroll-ind">
+    <div class="scroll-track"></div>
+    <span class="scroll-lbl fi-text">Vieritä</span>
+    <span class="scroll-lbl en-text">Scroll</span>
+  </div>
+</section>
+
+<!-- ══ NAV ══ -->
+<nav class="site-nav">
+  <a href="#about" class="nav-link fi-text">Minusta</a>
+  <a href="#about" class="nav-link en-text">About</a>
+  <a href="#horses" class="nav-link fi-text">Hevoset</a>
+  <a href="#horses" class="nav-link en-text">Horses</a>
+  <a href="#services" class="nav-link fi-text">Palvelut</a>
+  <a href="#services" class="nav-link en-text">Services</a>
+  <a href="#contact" class="nav-link fi-text">Yhteystiedot</a>
+  <a href="#contact" class="nav-link en-text">Contact</a>
+</nav>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="sec-lbl fi-text">Minusta</div>
+  <div class="sec-lbl en-text">About me</div>
+  <h2 class="sec-title fi-text">Yli 20 vuotta<br><em>hevosten kanssa</em></h2>
+  <h2 class="sec-title en-text">Over 20 years<br><em>with horses</em></h2>
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="portrait-frame">
+        <svg class="portrait-wm" viewBox="0 0 300 400" fill="none">
+          <g fill="#b8975a">
+            <ellipse cx="150" cy="240" rx="96" ry="59" transform="rotate(-5 150 240)"/>
+            <ellipse cx="220" cy="218" rx="50" ry="47"/>
+            <ellipse cx="88" cy="216" rx="44" ry="41"/>
+            <path d="M88 188C78 164 72 136 80 113C86 95 100 86 110 88C120 90 118 113 114 136C110 159 102 176 88 188Z"/>
+            <ellipse cx="98" cy="77" rx="33" ry="41" transform="rotate(-20 98 77)"/>
+            <ellipse cx="126" cy="103" rx="19" ry="14" transform="rotate(-10 126 103)"/>
+            <polygon points="84,45 76,20 96,44"/>
+            <polygon points="98,42 103,16 114,41"/>
+            <circle cx="106" cy="66" r="5" fill="#1c2b1e"/>
+            <path d="M80 268L78 348L76 368L84 369L86 348L90 268Z"/>
+            <path d="M98 272L98 352L98 372L106 372L105 352L106 273Z"/>
+            <path d="M183 272L181 352L180 372L188 372L189 352L191 273Z"/>
+            <path d="M203 268L202 348L202 368L210 368L210 348L213 268Z"/>
+            <path d="M254 203C270 194 280 213 275 238C270 263 258 276 250 266" fill="none" stroke="#b8975a" stroke-width="17" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+      <div class="portrait-accent"></div>
+      <div class="astat">
+        <div class="astat-n" data-count="20">0</div><div class="astat-n">+</div>
+        <div class="astat-l fi-text" style="margin-left:.3rem;">vuotta hevoskokemusta</div>
+        <div class="astat-l en-text" style="margin-left:.3rem;">years of horse experience</div>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <p class="lead fi-text">Olen –98 syntynyt nainen Inkoon Degerbystä. Aloitin ratsastuksen 2-vuotiaana naapurin ponilla ja olen ollut hevosten kanssa tekemisissä tauotta vuodesta 2002.</p>
+      <p class="lead en-text">Born in 1998, I'm an equestrian entrepreneur from Degerby, Inkoo. I began riding at age two on a neighbour's pony and have worked with horses without interruption since 2002.</p>
+      <p class="fi-text">Tarjoan erilaisia hevosalan palveluita yli 20 vuoden kokemuksella. Sijaitsemme rauhallisella alueella Kopparnäsin virkistysalueen lähellä — käytössämme on valaistu ratsastuskenttä, hiekkateitä ja metsäpolkuja.</p>
+      <p class="en-text">I offer a wide range of equestrian services with over 20 years of experience. We are located in a peaceful area near the Kopparnäs recreational area, with a floodlit riding arena, gravel roads and forest trails.</p>
+      <p class="fi-text">Olen kilpaillut aluetasolla HeA ja 100 cm sekä kenttäratsastuksessa harrastetasolla. Olen aina rakastanut nuoria- ja projektihevosia — tunne, kun hevonen oppii jotain uutta, on minulle suurempi saavutus kuin mikään pokaali.</p>
+      <p class="en-text">I have competed at regional level in HeA, 100 cm and eventing at amateur level. I have always loved young and project horses — the feeling when a horse learns something new is a greater achievement to me than any trophy.</p>
+      <div class="about-cred">
+        <p class="fi-text">Valmentajiani ovat olleet mm. Minna Leppälä, Piia Pantsu, Ulla Gunnarsson, Minna Kemppainen, Christine Procope, Ville Vaurio sekä Arja Aminoff. Toiminimellä on vastuu- ja oikeusturvavakuutus.</p>
+        <p class="en-text">My coaches have included Minna Leppälä, Piia Pantsu, Ulla Gunnarsson, Minna Kemppainen, Christine Procope, Ville Vaurio and Arja Aminoff. The business holds full liability and legal expenses insurance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HORSES ══ -->
+<section id="horses">
+  <div class="sec-lbl fi-text">Hevoseni</div>
+  <div class="sec-lbl en-text">My horses</div>
+  <h2 class="sec-title fi-text">Tallimme <em>asukkaat</em></h2>
+  <h2 class="sec-title en-text">The stable's <em>residents</em></h2>
+  <p class="horses-intro fi-text reveal">Jokaisella hevosellani on oma tarinansa — yhdessä ne muodostavat sen, mitä olemme.</p>
+  <p class="horses-intro en-text reveal">Each of my horses has their own story — together they make us what we are.</p>
+  <div class="horses-grid">
+    <div class="hcard reveal" data-year="2008–2012">
+      <div class="hname">Alfa</div>
+      <div class="hbreed fi-text">Connemararisteytys</div><div class="hbreed en-text">Connemara Cross</div>
+      <p class="hdesc fi-text">Ensimmäinen omani. Opetti hauskanpidon, hyppäämisen ja kisaamisen salat.</p>
+      <p class="hdesc en-text">My very first. Taught me the joys of jumping and competing.</p>
+      <span class="hstat fi-text">Muistot ikuisia</span><span class="hstat en-text">Forever remembered</span>
+    </div>
+    <div class="hcard reveal" data-year="2009–2013">
+      <div class="hname">Admi</div>
+      <div class="hbreed fi-text">Eestinhevonen</div><div class="hbreed en-text">Estonian Horse</div>
+      <p class="hdesc fi-text">Koulutin itse valmentajien avustuksella. 8-vuotiaana hyppi 110–120 cm kotona. Kilpailimme 100 cm ja HeA.</p>
+      <p class="hdesc en-text">Self-trained with coach support. Jumping 110–120 cm at home by age 8. Competed in 100 cm and HeA.</p>
+      <span class="hstat fi-text">Uudessa kodissa</span><span class="hstat en-text">In a new home</span>
+    </div>
+    <div class="hcard reveal" data-year="2012–2015">
+      <div class="hname">Diina</div>
+      <div class="hbreed fi-text">Hevonen</div><div class="hbreed en-text">Horse</div>
+      <p class="hdesc fi-text">Kilpailimme 100 cm ja HeA-luokissa sekä kenttä-aluevalmennus-renkaassa harrastetasolla.</p>
+      <p class="hdesc en-text">Competed at 100 cm and HeA, and in eventing regional training at amateur level.</p>
+      <span class="hstat fi-text">Ikuinen muisto</span><span class="hstat en-text">Forever in memory</span>
+    </div>
+    <div class="hcard reveal" data-year="2015–2024">
+      <div class="hname">Vikke</div>
+      <div class="hbreed fi-text">Ori · Eestinhevonen</div><div class="hbreed en-text">Stallion · Estonian Horse</div>
+      <p class="hdesc fi-text">Orin pitämistä, näyttelyelämää ja ajo-opetusta. Kotona treenasimme VaB-asioita, piaffia ja passagea.</p>
+      <p class="hdesc en-text">Stallion management, shows and driving. At home we worked on medium dressage, piaffe and passage.</p>
+      <span class="hstat fi-text">Ikivihreillä</span><span class="hstat en-text">In green pastures</span>
+    </div>
+    <div class="hcard reveal" data-year="2017 →">
+      <div class="hname">Takku</div>
+      <div class="hbreed fi-text">Hopeanmusta · Aktiivinen</div><div class="hbreed en-text">Silver-black · Active</div>
+      <p class="hdesc fi-text">Luotettava ratsu jokaiselle. Nostanut oppilaita 40 cm → 80 cm tasolta. HeB–HeA-tuloksia kilpailuissa.</p>
+      <p class="hdesc en-text">Reliable mount for everyone. Takes students from 40 cm to 80 cm. Competed HeB–HeA with good results.</p>
+      <span class="hstat fi-text">Tallissa · aktiivinen</span><span class="hstat en-text">In stable · active</span>
+    </div>
+    <div class="hcard reveal" data-year="2020 →">
+      <div class="hname">Elvis</div>
+      <div class="hbreed fi-text">Shetlanninponi · Aktiivinen</div><div class="hbreed en-text">Shetland Pony · Active</div>
+      <p class="hdesc fi-text">Täydellinen talutus- ja rapsutteluponi sekä ratsu napakoille kokeneemmille. Myös kärryttelyyn.</p>
+      <p class="hdesc en-text">Perfect leading and petting pony, mount for compact experienced riders — and a carriage pony.</p>
+      <span class="hstat fi-text">Tallissa · aktiivinen</span><span class="hstat en-text">In stable · active</span>
+    </div>
+    <div class="hcard reveal" data-year="2021 →">
+      <div class="hname">Beso</div>
+      <div class="hbreed fi-text">Espanjalainen · Kilpailee</div><div class="hbreed en-text">Andalusian-type · Competing</div>
+      <p class="hdesc fi-text">Hyvin herkkä — opettanut minulle aivan erilaista lähestymistapaa koulutukseen. Kilpailee omalla tasollaan, jo paljon potentiaalia.</p>
+      <p class="hdesc en-text">Highly sensitive — taught me a completely different training approach. Competing at his level, showing great potential.</p>
+      <span class="hstat fi-text">Tallissa · kilpailee</span><span class="hstat en-text">In stable · competing</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section id="services">
+  <div class="svc-hdr reveal">
+    <div>
+      <div class="sec-lbl fi-text">Palvelut &amp; hinnasto</div>
+      <div class="sec-lbl en-text">Services &amp; pricing</div>
+      <h2 class="sec-title fi-text">Mitä <em>tarjoan</em></h2>
+      <h2 class="sec-title en-text">What I <em>offer</em></h2>
+    </div>
+    <div class="svc-note fi-text">Hintoihin lisätään matkakulut 0,60 €/km kun matka yli 20 km Degerbystä. Hinnat sisältävät ALV.</div>
+    <div class="svc-note en-text">Travel costs of €0.60/km are added for distances over 20 km from Degerby. All prices include VAT.</div>
+  </div>
+  <div class="svc-grid">
+    <div class="scard reveal"><div class="sico">🎯</div>
+      <div class="sname fi-text">Yksityisvalmennus</div><div class="sname en-text">Private coaching</div>
+      <p class="sdesc fi-text">Valmennus omalla hevosella. Koulua ja esteitä harrastajille sekä kilpaileville.</p>
+      <p class="sdesc en-text">Coaching on your own horse. Dressage and jumping for leisure and club-level competitors.</p>
+      <div class="sprice"><span class="spnum">40€</span><span class="spunit fi-text">/tunti</span><span class="spunit en-text">/hour</span></div>
+    </div>
+    <div class="scard reveal"><div class="sico">👥</div>
+      <div class="sname fi-text">Ryhmävalmennus</div><div class="sname en-text">Group coaching</div>
+      <p class="sdesc fi-text">2–3 ratsukkoa omilla hevosilla. Sopii kaikentasoisille.</p>
+      <p class="sdesc en-text">2–3 riders on their own horses. Suitable for all levels.</p>
+      <div class="sprice"><span class="spnum">25€</span><span class="spunit fi-text">/h/ratsukko</span><span class="spunit en-text">/h/rider</span></div>
+    </div>
+    <div class="scard reveal"><div class="sico">🐴</div>
+      <div class="sname fi-text">Ratsastustunti</div><div class="sname en-text">Riding lesson</div>
+      <p class="sdesc fi-text">Tunti tallin hevosilla, sisältää opastuksen hevosen hoitoon.</p>
+      <p class="sdesc en-text">Lesson on stable horses, including horse care guidance.</p>
+      <div class="sprice"><span class="spnum">55€</span><span class="spunit fi-text">/tunti</span><span class="spunit en-text">/hour</span></div>
+    </div>
+    <div class="scard reveal"><div class="sico">🌱</div>
+      <div class="sname fi-text">Talutusratsastus</div><div class="sname en-text">Led rides</div>
+      <p class="sdesc fi-text">Shetlanninponilla tai eestinhevosella. Kuntoonlaitto + n. 20–30 min ratsastus. Myös tapahtumiin.</p>
+      <p class="sdesc en-text">On Shetland pony or Estonian horse. Prep + approx. 20–30 min riding. Available at events.</p>
+      <div class="sprice"><span class="spnum">30€</span><span class="spunit fi-text">/lapsi · 50€/2–3</span><span class="spunit en-text">/child · 50€/2–3</span></div>
+    </div>
+    <div class="scard reveal"><div class="sico">⚙️</div>
+      <div class="sname fi-text">Ratsutus &amp; koulutus</div><div class="sname en-text">Riding-in &amp; training</div>
+      <p class="sdesc fi-text">Ratsutus 30 €/kerta. Muut koulutukset tapauskohtaisesti — sisäänratsastus, siedätys, lastaus ym.</p>
+      <p class="sdesc en-text">Riding-in €30/session. Other training priced individually — backing, desensitisation, loading etc.</p>
+      <div class="sprice"><span class="spnum">30€</span><span class="spunit fi-text">alkaen</span><span class="spunit en-text">from</span></div>
+    </div>
+    <div class="scard reveal"><div class="sico">✨</div>
+      <div class="sname fi-text">Taitokurssi</div><div class="sname en-text">Skills workshop</div>
+      <p class="sdesc fi-text">Lastaus, ajaminen, ohjasajo, juoksuttaminen, haavojen hoito. Yksin tai ryhmässä.</p>
+      <p class="sdesc en-text">Loading, driving, long-reining, lunge work, wound care. Solo or in a group.</p>
+      <div class="sprice"><span class="spnum">40€</span><span class="spunit fi-text">alkaen/krt</span><span class="spunit en-text">from/session</span></div>
+    </div>
+    <div class="scard feat reveal" style="grid-column:span 2;"><div class="sico">🏠</div>
+      <div class="sname fi-text">Koulutus-täysihoito</div><div class="sname en-text">Training full board</div>
+      <p class="sdesc fi-text">Hevosesi kehittyminen ammattilaisten käsissä. Kaiken ikäisille, rotuisille, kokoisille ja sukupuolisille hevosille ja poneille.</p>
+      <p class="sdesc en-text">Your horse's development in professional hands. Suitable for horses and ponies of any age, breed, size and sex.</p>
+      <div class="sprice" style="margin-bottom:1.5rem;"><span class="spnum">700–1 000€</span><span class="spunit fi-text">/kk</span><span class="spunit en-text">/month</span></div>
+      <ul class="slist fi-text">
+        <li>3–6 työskentelypäivää viikossa yksilöllisiin tarpeisiin suhteutettuna</li>
+        <li>Kuivaheinäruokinta 4 krt/vrk · väkirehut 2 krt/vrk</li>
+        <li>Tarhaus klo 6–22 tai sään mukaan · Karsinapaikka lämpimässä ulkotallissa</li>
+        <li>Loimitus ja suojitus tarpeen mukaan</li>
+      </ul>
+      <ul class="slist en-text">
+        <li>3–6 working days per week tailored to individual needs</li>
+        <li>Dry hay 4×/day · concentrate feed 2×/day</li>
+        <li>Turn-out 6 am–10 pm or weather permitting · Box in a warm outdoor stable</li>
+        <li>Rugging and protection as needed</li>
+      </ul>
+    </div>
+    <div class="scard reveal"><div class="sico">🎉</div>
+      <div class="sname fi-text">Ponisynttärit</div><div class="sname en-text">Pony birthday parties</div>
+      <p class="sdesc fi-text">Meidän tallilla tai kotona. Yhteistyössä NEPSY- ja eläinavusteiseen valmennukseen koulutetun yrittäjän kanssa.</p>
+      <p class="sdesc en-text">At our stable or at your home. In collaboration with a NEPSY and animal-assisted coaching specialist.</p>
+      <div class="sprice"><span class="spnum fi-text">Kysy tarjous</span><span class="spnum en-text">Ask for quote</span></div>
+    </div>
+    <div class="scard reveal"><div class="sico">🤝</div>
+      <div class="sname fi-text">Lomitus &amp; apukädet</div><div class="sname en-text">Stable help</div>
+      <p class="sdesc fi-text">Lomitusta ja apukäsiä tallihommiin. Otetaan yhteyttä — keksitään toimivin ratkaisu.</p>
+      <p class="sdesc en-text">Holiday cover and extra hands. Get in touch — we'll find the best solution.</p>
+      <div class="sprice"><span class="spnum fi-text">Sovitaan</span><span class="spnum en-text">By agreement</span></div>
+    </div>
+  </div>
+  <!-- Visits -->
+  <div class="visits reveal">
+    <div>
+      <div class="sec-lbl fi-text" style="margin-bottom:.8rem;">Hevosen vierailut</div>
+      <div class="sec-lbl en-text" style="margin-bottom:.8rem;">Horse visits</div>
+      <h3 class="vtitle fi-text">Hevosemme tulevat luoksesi</h3>
+      <h3 class="vtitle en-text">Our horses come to you</h3>
+      <p class="vdesc fi-text">Hevosemme matkustavat mielellään kouluihin, sairaaloihin ja tapahtumiin n. 80 km säteellä Inkoosta. Mukaan voi tulla myös terapiakoulutettu koira tai pienet kanit. Matkakulut 20 km jälkeen 1 €/km.</p>
+      <p class="vdesc en-text">Our horses happily travel to schools, hospitals and events within about 80 km of Inkoo. A therapy-trained dog or small rabbits can also accompany. Travel costs of €1/km after the first 20 km.</p>
+    </div>
+    <div class="vprices">
+      <div class="vrow">
+        <span class="vlbl fi-text">Rapsuttelu-/talutusponi · lähtömaksu + tunti</span>
+        <span class="vlbl en-text">Petting/leading pony · start + hour</span>
+        <span class="vval">50 + 50€/h</span>
+      </div>
+      <div class="vrow">
+        <span class="vlbl fi-text">Poni kärryjen kanssa · lähtömaksu + tunti</span>
+        <span class="vlbl en-text">Pony with carriage · start + hour</span>
+        <span class="vval">80 + 50€/h</span>
+      </div>
+      <div class="vrow">
+        <span class="vlbl fi-text">Poni + hevonen rapsutteluun &amp; talutukseen</span>
+        <span class="vlbl en-text">Pony + horse for petting &amp; leading</span>
+        <span class="vval">100 + 50€/h</span>
+      </div>
+    </div>
+  </div>
+  <div class="pay-strip">
+    <div class="pm"><span class="ic">💵</span><span class="fi-text">Käteinen</span><span class="en-text">Cash</span></div>
+    <div class="pm"><span class="ic">📱</span>Mobile Pay</div>
+    <div class="pm"><span class="ic">🏦</span><span class="fi-text">Tiliirto</span><span class="en-text">Bank transfer</span></div>
+    <div class="pm"><span class="ic">🧾</span><span class="fi-text">Laskutus (yritykset)</span><span class="en-text">Invoicing (companies)</span></div>
+    <div class="pm"><span class="ic">⚠️</span><span class="fi-text">Peruutus 24h ennen</span><span class="en-text">Cancel 24h in advance</span></div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div>
+    <div class="sec-lbl fi-text">Yhteystiedot</div>
+    <div class="sec-lbl en-text">Contact</div>
+    <h2 class="sec-title fi-text">Ota <em>yhteyttä</em></h2>
+    <h2 class="sec-title en-text">Get in <em>touch</em></h2>
+    <p class="c-tag fi-text">Kysy rohkeasti myös palveluista, joita ei ole mainittu sivuillani — yhdessä keksitään sopiva ratkaisu.</p>
+    <p class="c-tag en-text">Don't hesitate to ask about services not listed on these pages — together we'll find the right solution.</p>
+    <div class="c-details">
+      <div class="citem reveal">
+        <div class="cico">📍</div>
+        <div class="ctext">
+          <strong class="fi-text">Sijainti</strong><strong class="en-text">Location</strong>
+          <p>Degerby, Inkoo<br><span class="fi-text">Kopparnäsin virkistysalueen lähellä</span><span class="en-text">Near Kopparnäs recreational area</span></p>
+        </div>
+      </div>
+      <div class="citem reveal">
+        <div class="cico">🏢</div>
+        <div class="ctext">
+          <strong class="fi-text">Yritys</strong><strong class="en-text">Business</strong>
+          <p>Tmi Ronya Sane<br><span class="fi-text">Vastuu- ja oikeusturvavakuutus voimassa</span><span class="en-text">Full liability &amp; legal expenses insurance</span></p>
+        </div>
+      </div>
+      <div class="citem reveal">
+        <div class="cico">💳</div>
+        <div class="ctext">
+          <strong class="fi-text">Maksutavat</strong><strong class="en-text">Payment</strong>
+          <p><span class="fi-text">Käteinen · Mobile Pay · Tiliirto · Laskutus</span><span class="en-text">Cash · Mobile Pay · Bank transfer · Invoice</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cform reveal">
+    <div class="frow">
+      <div class="ff"><label class="fi-text">Nimi</label><label class="en-text">Name</label><input type="text" placeholder="Etunimi Sukunimi"></div>
+      <div class="ff"><label class="fi-text">Sähköposti</label><label class="en-text">Email</label><input type="email" placeholder="sinä@email.fi"></div>
+    </div>
+    <div class="ff">
+      <label class="fi-text">Palvelu</label><label class="en-text">Service</label>
+      <select>
+        <option value="" disabled selected>—</option>
+        <option>Yksityisvalmennus / Private coaching</option>
+        <option>Ryhmävalmennus / Group coaching</option>
+        <option>Ratsastustunti / Riding lesson</option>
+        <option>Talutusratsastus / Led rides</option>
+        <option>Koulutus-täysihoito / Training full board</option>
+        <option>Hevosen vierailu / Horse visit</option>
+        <option>Ponisynttärit / Pony birthday party</option>
+        <option>Muu / Other</option>
+      </select>
+    </div>
+    <div class="ff"><label class="fi-text">Viesti</label><label class="en-text">Message</label><textarea rows="5"></textarea></div>
+    <button class="sbtn fi-text">Lähetä viesti</button>
+    <button class="sbtn en-text">Send message</button>
+    <p class="fnote fi-text">Muistathan peruuttaa varatun tapaamisesi viimeistään 24h ennen, muuten perimme puolet palvelun hinnasta.</p>
+    <p class="fnote en-text">Please cancel a booked appointment at least 24 hours in advance; otherwise half the service fee will be charged.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="fbrand">Tmi Ronya Sane · Degerby, Inkoo</div>
+  <div class="fcopy">© 2025 Ronya Sane · <span class="fi-text">Kaikki oikeudet pidätetään</span><span class="en-text">All rights reserved</span></div>
+</footer>
+
+<script>
+/* ── LANGUAGE ── */
+function setLang(l){
+  document.body.classList.remove('lang-fi','lang-en');
+  document.body.classList.add('lang-'+l);
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim().toLowerCase()===l));
+  document.documentElement.lang=l;
+}
+
+/* ── CURSOR ── */
+const cur=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+let mx=window.innerWidth/2,my=window.innerHeight/2,rx=mx,ry=my;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function rl(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(rl);})();
+document.querySelectorAll('a,button,.hcard,.scard,.nav-link,.lang-btn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cx'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cx'));
+});
+
+/* ── PARTICLES ── */
+const cv=document.getElementById('pcv');
+const cx2=cv.getContext('2d');
+let W,H,pts=[];
+const COLS=['#b8975a','#d4b07a','#6b8c6e','#4a6a4d','#c8a870','#96784a'];
+
+function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
+
+class P{
+  constructor(){this.init(true);}
+  init(sc){
+    this.x=Math.random()*W;
+    this.y=sc?(Math.random()*H):(H+8);
+    this.sz=Math.random()*2.2+.7;
+    this.bvx=(Math.random()-.5)*.38;
+    this.bvy=-(Math.random()*.55+.12);
+    this.vx=this.bvx; this.vy=this.bvy;
+    this.al=Math.random()*.5+.1;
+    this.col=COLS[Math.floor(Math.random()*COLS.length)];
+    this.t=0; this.mt=Math.random()*480+180;
+    this.wb=Math.random()*Math.PI*2;
+    this.ws=Math.random()*.022+.007;
+  }
+  tick(){
+    this.t++; this.wb+=this.ws;
+    this.vx=this.bvx+Math.sin(this.wb)*.16;
+    const dx=this.x-mx,dy=this.y-my,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<140&&d>0){const f=(140-d)/140;this.vx+=dx/d*f*.55;this.vy+=dy/d*f*.55;}
+    this.vx*=.96;this.vy*=.99;
+    this.vx+=(this.bvx-this.vx)*.02;
+    this.vy+=(this.bvy-this.vy)*.01;
+    this.x+=this.vx;this.y+=this.vy;
+    if(this.y<-15||this.x<-15||this.x>W+15||this.t>this.mt)this.init(false);
+  }
+  draw(){
+    const p=this.t/this.mt;
+    const a=this.al*(p<.14?p/.14:(p>.82?(1-p)/.18:1));
+    cx2.save();cx2.globalAlpha=a;cx2.fillStyle=this.col;
+    cx2.shadowBlur=this.sz*5;cx2.shadowColor=this.col;
+    cx2.beginPath();cx2.arc(this.x,this.y,this.sz,0,Math.PI*2);cx2.fill();
+    cx2.restore();
+  }
+}
+
+function initP(){
+  pts=[];
+  const n=Math.min(200,Math.floor(W*H/7500));
+  for(let i=0;i<n;i++)pts.push(new P());
+}
+
+function loop(){
+  cx2.clearRect(0,0,W,H);
+  pts.forEach(p=>{p.tick();p.draw();});
+  requestAnimationFrame(loop);
+}
+
+window.addEventListener('resize',()=>{resize();initP();});
+resize();initP();loop();
+
+/* ── PARALLAX ── */
+const hero=document.querySelector('.hero');
+const horseEl=document.getElementById('horse-wrap');
+let tx=0,ty=0,cxp=0,cyp=0;
+hero.addEventListener('mousemove',e=>{
+  const r=hero.getBoundingClientRect();
+  tx=((e.clientX-r.left)/r.width-.5)*28;
+  ty=((e.clientY-r.top)/r.height-.5)*14;
+});
+hero.addEventListener('mouseleave',()=>{tx=0;ty=0;});
+(function pl(){
+  cxp+=(tx-cxp)*.065;cyp+=(ty-cyp)*.065;
+  if(horseEl)horseEl.style.transform=`translateX(${cxp*.55}px) translateY(${cyp*.45}px)`;
+  requestAnimationFrame(pl);
+})();
+
+/* ── MAGNETIC CTA ── */
+document.querySelectorAll('.h-cta').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{
+    const r=btn.getBoundingClientRect();
+    const dx=(e.clientX-r.left-r.width/2)*.2;
+    const dy=(e.clientY-r.top-r.height/2)*.2;
+    btn.style.transform=`translate(${dx}px,${dy}px)`;
+  });
+  btn.addEventListener('mouseleave',()=>btn.style.transform='');
+});
+
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*65);obs.unobserve(e.target);}
+  });
+},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ── COUNTER ── */
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const cobs=new IntersectionObserver(([entry])=>{
+    if(!entry.isIntersecting)return;
+    const target=parseInt(el.getAttribute('data-count'));
+    const dur=1500;const st=performance.now();
+    (function tick(now){
+      const p=Math.min((now-st)/dur,1);
+      el.textContent=Math.floor((1-Math.pow(1-p,3))*target);
+      if(p<1)requestAnimationFrame(tick);else el.textContent=target;
+    })(performance.now());
+    cobs.disconnect();
+  },{threshold:.5});
+  cobs.observe(el);
+});
+</script>
+</body>
+</html>
