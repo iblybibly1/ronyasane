@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minusta – RonyaSane</title>
+  <meta name="description" content="Ronya Sane – yli 20 vuotta hevosten kanssa. Lue tarina hevosrakkauden takana.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 5rem;
+      align-items: start;
+      margin-top: 4rem;
+    }
+
+    .portrait-wrap { position: relative; }
+
+    .portrait-box {
+      aspect-ratio: 3/4;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portrait-accent {
+      position: absolute;
+      bottom: -14px;
+      right: -14px;
+      width: 65%;
+      height: 60%;
+      border: 1px solid rgba(184,151,90,0.3);
+      pointer-events: none;
+    }
+
+    .portrait-accent::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px;
+      width: 20px; height: 20px;
+      border-top: 1px solid var(--gold);
+      border-left: 1px solid var(--gold);
+    }
+
+    .info-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    .badge {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(27,43,30,0.15);
+      color: var(--text-light);
+      font-weight: 400;
+    }
+
+    .timeline { margin-top: 1.5rem; }
+
+    .timeline-item {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid rgba(27,43,30,0.06);
+    }
+
+    .timeline-year {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      min-width: 60px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .timeline-text { font-size: 0.88rem; color: var(--text-light); line-height: 1.8; }
+    .timeline-text strong { color: var(--forest); font-weight: 400; }
+
+    .coaches-block {
+      background: var(--forest);
+      padding: 3rem;
+      margin-top: 4rem;
+    }
+
+    .coaches-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .coaches-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .coach-pill {
+      background: rgba(245,240,232,0.06);
+      border: 1px solid rgba(184,151,90,0.2);
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      color: rgba(245,240,232,0.6);
+      letter-spacing: 0.05em;
+    }
+
+    .insurance-note {
+      margin-top: 1.5rem;
+      font-size: 0.78rem;
+      color: rgba(245,240,232,0.35);
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .portrait-box { aspect-ratio: 4/3; }
+      .coaches-block { padding: 2rem; }
+    }
+  </style>
+</head>
+<body class="lang-fi">
+
+<div id="page-transition" class="page-transition"></div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-img-fallback">🐴</div>
+    <div>
+      <div class="nav-logo-text">RonyaSane</div>
+      <div class="nav-logo-sub fi">Hevosalan palvelut</div>
+      <div class="nav-logo-sub en">Equestrian Services</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="fi">Etusivu</a><a href="index.html" class="en">Home</a></li>
+    <li><a href="about.html" class="fi">Minusta</a><a href="about.html" class="en">About</a></li>
+    <li><a href="horses.html" class="fi">Hevoset</a><a href="horses.html" class="en">Horses</a></li>
+    <li><a href="services.html" class="fi">Palvelut</a><a href="services.html" class="en">Services</a></li>
+    <li><a href="contact.html" class="fi">Yhteystiedot</a><a href="contact.html" class="en">Contact</a></li>
+  </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="fi">FI</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+  <button class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<nav class="nav-drawer">
+  <a href="index.html" class="fi">Etusivu</a><a href="index.html" class="en">Home</a>
+  <a href="about.html" class="fi">Minusta</a><a href="about.html" class="en">About</a>
+  <a href="horses.html" class="fi">Hevoset</a><a href="horses.html" class="en">Horses</a>
+  <a href="services.html" class="fi">Palvelut &amp; hinnasto</a><a href="services.html" class="en">Services &amp; pricing</a>
+  <a href="contact.html" class="fi">Yhteystiedot</a><a href="contact.html" class="en">Contact</a>
+  <div class="nav-drawer-lang">
+    <button class="lang-btn" data-lang="fi">FI</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="page-eyebrow fi">Tmi Ronya Sane · Degerby, Inkoo</div>
+    <div class="page-eyebrow en">Tmi Ronya Sane · Degerby, Inkoo</div>
+    <h1 class="page-title fi">Vähän <em>minusta</em></h1>
+    <h1 class="page-title en">About <em>me</em></h1>
+    <div class="page-hero-line"></div>
+  </div>
+</div>
+
+<!-- MAIN ABOUT -->
+<section class="section" style="background:var(--ivory);">
+  <div class="about-grid">
+    <div class="portrait-wrap reveal-left">
+      <!-- Image file: images/ronya-portrait.jpg -->
+      <div class="portrait-box img-placeholder">
+        <img src="images/ronya-portrait.jpg" alt="Ronya Sane" class="portrait-img"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <span style="position:relative;z-index:1;font-size:0.6rem;letter-spacing:0.12em;color:rgba(184,151,90,0.4);text-align:center;padding:1rem;">images/ronya-portrait.jpg</span>
+      </div>
+      <div class="portrait-accent"></div>
+
+      <div class="info-badges" style="margin-top:2.5rem;">
+        <span class="badge fi">Syntynyt 1998</span>
+        <span class="badge en">Born 1998</span>
+        <span class="badge fi">Ratsastanut 2002 →</span>
+        <span class="badge en">Riding since 2002</span>
+        <span class="badge fi">Omat hevoset 2008 →</span>
+        <span class="badge en">Own horses since 2008</span>
+        <span class="badge fi">Inkoo, Degerby</span>
+        <span class="badge en">Inkoo, Degerby</span>
+      </div>
+    </div>
+
+    <div class="reveal-right">
+      <div class="section-label fi">Tarina</div>
+      <div class="section-label en">My story</div>
+      <h2 class="section-title fi">Yli 20 vuotta <em>hevosten kanssa</em></h2>
+      <h2 class="section-title en">Over 20 years <em>with horses</em></h2>
+
+      <p style="font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:400; color:var(--forest); line-height:1.65; margin-bottom:1.5rem;" class="fi">
+        Olen aina rakastanut nuoria- ja projektihevosia. En tiedä mitään parempaa kuin tunne, kun onnistuu jossain hevosen koulutuksessa.
+      </p>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:400; color:var(--forest); line-height:1.65; margin-bottom:1.5rem;" class="en">
+        I have always loved young and project horses. I know nothing better than the feeling of succeeding in training a horse.
+      </p>
+
+      <p style="font-size:0.9rem; line-height:1.9; color:var(--text-light); margin-bottom:1rem;" class="fi">
+        Aloitin ratsastuksen talutuksessa 2-vuotiaana naapurin ponilla. Vuoden jälkeen siirryin Leppävaaraan, jossa ratsastin noin 4 vuotta. Sen jälkeen olen ratsastanut mm. Billnäsissä ja Aktiivitallilla.
+      </p>
+      <p style="font-size:0.9rem; line-height:1.9; color:var(--text-light); margin-bottom:1rem;" class="en">
+        I began riding at age two on a neighbour's pony. A year later I moved to Leppävaara, where I rode for about four years, and after that at stables in Billnäs and Aktiivitalli.
+      </p>
+
+      <p style="font-size:0.9rem; line-height:1.9; color:var(--text-light); margin-bottom:1rem;" class="fi">
+        Olen kilpaillut aluetasolla HeA, 100 cm sekä kenttäratsastuksessa harrastetasolla, enimmäkseen kouluttanut nuoria hevosia. Tällä hetkellä omassa tallissa asuu 2 hevosta ja poni.
+      </p>
+      <p style="font-size:0.9rem; line-height:1.9; color:var(--text-light); margin-bottom:1rem;" class="en">
+        I have competed at regional level in HeA and 100 cm show jumping, and in eventing at amateur level, though my focus has mostly been on training young horses. Currently two horses and a pony live in my stable.
+      </p>
+
+      <p style="font-size:0.9rem; line-height:1.9; color:var(--text-light); margin-bottom:2rem;" class="fi">
+        Sijaitsemme rauhallisella alueella Kopparnäsin virkistysalueen lähellä. Käytössämme on valaistu ratsastuskenttä, hiekkateitä ja metsäpolkuja. Toiminimellä on vastuu- ja oikeusturvavakuutus.
+      </p>
+      <p style="font-size:0.9rem; line-height:1.9; color:var(--text-light); margin-bottom:2rem;" class="en">
+        We are located in a peaceful area near the Kopparnäs recreational area, with a floodlit riding arena, gravel roads and forest trails. The sole trader business holds full liability and legal expenses insurance.
+      </p>
+
+      <a href="services.html" class="btn btn-primary fi">Palvelut &amp; hinnasto →</a>
+      <a href="services.html" class="btn btn-primary en">Services &amp; pricing →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section section-cream">
+  <div class="reveal">
+    <div class="section-label fi">Historia</div>
+    <div class="section-label en">History</div>
+    <h2 class="section-title fi">Tieni <em>hevosten kanssa</em></h2>
+    <h2 class="section-title en">My journey <em>with horses</em></h2>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2002</div>
+      <div class="timeline-text fi"><strong>Ratsastus alkaa.</strong> Aloitin ratsastuksen 2-vuotiaana talutuksessa naapurin ponilla, sitten Leppävaara ja myöhemmin Billnäs ja Aktiivitalli.</div>
+      <div class="timeline-text en"><strong>Riding begins.</strong> Started riding at age two in leading at a neighbour's pony, then Leppävaara, later Billnäs and Aktiivitalli.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2008</div>
+      <div class="timeline-text fi"><strong>Alfa — ensimmäinen oma poni.</strong> 16-vuotias connemararisteytys, joka opetti hauskanpidon, hyppäämisen ja kisaamisen salat.</div>
+      <div class="timeline-text en"><strong>Alfa — first pony.</strong> A 16-year-old Connemara cross who taught me the joys of fun, jumping and competing.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2009</div>
+      <div class="timeline-text fi"><strong>Admi — toinen poni.</strong> 4-vuotias Eestinhevonen, jonka koulutin itse. 8-vuotiaana hyppi 110–120 cm kotona. Kilpailimme 100 cm ja HeA.</div>
+      <div class="timeline-text en"><strong>Admi — second pony.</strong> A 4-year-old Estonian horse I trained myself. By age 8 was jumping 110–120 cm at home. We competed at 100 cm and HeA.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2012</div>
+      <div class="timeline-text fi"><strong>Diina — ensimmäinen hevonen.</strong> 6-vuotias hevonen, jonka kanssa opeteltiin perusasioita. Kilpailimme 100 cm, HeA sekä kenttäratsastuksessa harrastetasolla.</div>
+      <div class="timeline-text en"><strong>Diina — first horse.</strong> A 6-year-old horse with whom we built the basics. Competed at 100 cm, HeA and eventing at amateur level.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2015</div>
+      <div class="timeline-text fi"><strong>Vikke saapuu Suomeen.</strong> 2013 syntynyt ori. Harjoittelimme orin pitämistä, näyttelyelämää, ajo-opetusta ja myöhemmin laukkapiruetteja ja piaffia.</div>
+      <div class="timeline-text en"><strong>Vikke arrives in Finland.</strong> A 2013-born stallion. We practised stallion management, showing, driving and later canter pirouettes and piaffe.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2017</div>
+      <div class="timeline-text fi"><strong>Takku muuttaa tallin.</strong> Hopeanmusta varsa, josta kasvoi luotettava ratsu kaikille ratsastajille. Kilpaillut HeB–HeA ja 80 cm esteillä.</div>
+      <div class="timeline-text en"><strong>Takku joins the stable.</strong> A silver-black foal who grew into a reliable mount for all riders. Has competed in HeB–HeA and 80 cm show jumping.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2018</div>
+      <div class="timeline-text fi"><strong>Muutto uuteen kotiin.</strong> Hevosten kanssa siirryttiin omaan talliin.</div>
+      <div class="timeline-text en"><strong>Move to a new home.</strong> We moved with the horses to our own stable.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2020</div>
+      <div class="timeline-text fi"><strong>Elvis — seuraponi.</strong> 3-vuotias shetlanninponi, täydellinen talutus- ja rapsutteluponi sekä kärryhevonen.</div>
+      <div class="timeline-text en"><strong>Elvis — companion pony.</strong> A 3-year-old Shetland pony, perfect as a leading pony, petting pony and carriage pony.</div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2021</div>
+      <div class="timeline-text fi"><strong>Beso saapuu Espanjasta.</strong> 2-vuotias, herkkä espanjalainen. Opettanut minulle aivan erilaista lähestymistapaa koulutukseen.</div>
+      <div class="timeline-text en"><strong>Beso arrives from Spain.</strong> A 2-year-old, sensitive Andalusian-type. Has taught me a completely different approach to training.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COACHES -->
+<section class="section section-dark">
+  <div class="coaches-block reveal">
+    <div style="color:var(--gold); font-size:0.68rem; letter-spacing:0.3em; text-transform:uppercase; font-weight:400; margin-bottom:0.8rem;" class="fi">Valmentajani</div>
+    <div style="color:var(--gold); font-size:0.68rem; letter-spacing:0.3em; text-transform:uppercase; font-weight:400; margin-bottom:0.8rem;" class="en">My coaches</div>
+    <div class="coaches-title fi">Parhailta oppiminen on antanut minulle vahvan pohjan.</div>
+    <div class="coaches-title en">Learning from the best has given me a strong foundation.</div>
+    <div class="coaches-list">
+      <span class="coach-pill">Minna Leppälä</span>
+      <span class="coach-pill">Piia Pantsu</span>
+      <span class="coach-pill">Ulla Gunnarsson</span>
+      <span class="coach-pill">Minna Kemppainen</span>
+      <span class="coach-pill">Christine Procope</span>
+      <span class="coach-pill">Ville Vaurio</span>
+      <span class="coach-pill">Arja Aminoff</span>
+    </div>
+    <p class="insurance-note fi">Toiminimellä on vastuu- ja oikeusturvavakuutus voimassa. Suosittelemme, että asiakkailla on omat henkilökohtaiset vapaa-ajan tapaturmavakuutukset voimassa.</p>
+    <p class="insurance-note en">The business holds full liability and legal expenses insurance. We recommend that clients have their own personal leisure accident insurance in place.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div>
+      <div class="footer-brand-name">Ronya Sane</div>
+      <div class="footer-brand-sub fi">Tmi · Hevosalan palvelut</div>
+      <div class="footer-brand-sub en">Sole trader · Equestrian services</div>
+      <p class="footer-tagline fi">"En tiedä mitään parempaa kuin tunne, kun onnistuu jossain hevosen koulutuksessa."</p>
+      <p class="footer-tagline en">"I know nothing better than the feeling of succeeding in training a horse."</p>
+    </div>
+    <div>
+      <div class="footer-col-title fi">Sivut</div>
+      <div class="footer-col-title en">Pages</div>
+      <ul class="footer-links fi"><li><a href="index.html">Etusivu</a></li><li><a href="about.html">Minusta</a></li><li><a href="horses.html">Hevoset</a></li><li><a href="services.html">Palvelut</a></li><li><a href="contact.html">Yhteystiedot</a></li></ul>
+      <ul class="footer-links en"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="horses.html">Horses</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title fi">Yhteystiedot</div>
+      <div class="footer-col-title en">Contact</div>
+      <div class="footer-contact-item"><div class="footer-contact-item-icon">📍</div><div class="footer-contact-item-text">Degerby, Inkoo</div></div>
+      <div class="footer-contact-item"><div class="footer-contact-item-icon">🛡️</div><div class="footer-contact-item-text fi">Vastuu- ja oikeusturvavakuutus</div><div class="footer-contact-item-text en">Liability &amp; legal insurance</div></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Tmi Ronya Sane · Degerby, Inkoo</div>
+    <div class="footer-copy fi">Kaikki oikeudet pidätetään</div>
+    <div class="footer-copy en">All rights reserved</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

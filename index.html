@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RonyaSane – Elämää hevosten kanssa</title>
+  <meta name="description" content="Hevosalan palveluita yli 20 vuoden kokemuksella. Valmennus, ratsutus, hevosvierailut ja paljon muuta. Inkoo, Degerby.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="lang-fi">
+
+<!-- Page transition overlay -->
+<div id="page-transition" class="page-transition"></div>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-img-fallback">🐴</div>
+    <!-- Uncomment when logo is ready:
+    <img src="images/logo.png" alt="RonyaSane" class="nav-logo-img"> -->
+    <div>
+      <div class="nav-logo-text">RonyaSane</div>
+      <div class="nav-logo-sub fi">Hevosalan palvelut</div>
+      <div class="nav-logo-sub en">Equestrian Services</div>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="index.html" class="fi">Etusivu</a><a href="index.html" class="en">Home</a></li>
+    <li><a href="about.html" class="fi">Minusta</a><a href="about.html" class="en">About</a></li>
+    <li><a href="horses.html" class="fi">Hevoset</a><a href="horses.html" class="en">Horses</a></li>
+    <li><a href="services.html" class="fi">Palvelut</a><a href="services.html" class="en">Services</a></li>
+    <li><a href="contact.html" class="fi">Yhteystiedot</a><a href="contact.html" class="en">Contact</a></li>
+  </ul>
+
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="fi">FI</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+
+  <button class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- Mobile drawer -->
+<nav class="nav-drawer">
+  <a href="index.html" class="fi">Etusivu</a>
+  <a href="index.html" class="en">Home</a>
+  <a href="about.html" class="fi">Minusta</a>
+  <a href="about.html" class="en">About</a>
+  <a href="horses.html" class="fi">Hevoset</a>
+  <a href="horses.html" class="en">Horses</a>
+  <a href="services.html" class="fi">Palvelut &amp; hinnasto</a>
+  <a href="services.html" class="en">Services &amp; pricing</a>
+  <a href="contact.html" class="fi">Yhteystiedot</a>
+  <a href="contact.html" class="en">Contact</a>
+  <div class="nav-drawer-lang">
+    <button class="lang-btn" data-lang="fi">FI</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow fi">Hevosalan palvelut · Inkoo, Degerby</div>
+    <div class="hero-eyebrow en">Equestrian services · Inkoo, Degerby</div>
+    <h1 class="hero-title">
+      Ronya
+      <em>Sane</em>
+    </h1>
+    <p class="hero-tagline fi">Elämää hevosten kanssa</p>
+    <p class="hero-tagline en">Life with horses</p>
+    <div class="hero-ctas">
+      <a href="services.html" class="btn btn-primary">
+        <span class="fi">Tutustu palveluihin</span>
+        <span class="en">Explore services</span>
+      </a>
+      <a href="contact.html" class="btn btn-outline">
+        <span class="fi">Ota yhteyttä</span>
+        <span class="en">Get in touch</span>
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══ STATS ══ -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <div class="stat-num" data-count="20" data-suffix="+">20+</div>
+    <div class="stat-label fi">Vuotta kokemusta</div>
+    <div class="stat-label en">Years experience</div>
+  </div>
+  <div class="stat-item reveal delay-1">
+    <div class="stat-num" data-count="3">3</div>
+    <div class="stat-label fi">Hevosta tallissa</div>
+    <div class="stat-label en">Horses in stable</div>
+  </div>
+  <div class="stat-item reveal delay-2">
+    <div class="stat-num" data-count="80">80</div>
+    <div class="stat-label fi">km vierailualue</div>
+    <div class="stat-label en">km visit radius</div>
+  </div>
+  <div class="stat-item reveal delay-3">
+    <div class="stat-num" data-count="7">7</div>
+    <div class="stat-label fi">Hevosta kautta aikojen</div>
+    <div class="stat-label en">Horses over the years</div>
+  </div>
+</div>
+
+<!-- ══ INTRO ══ -->
+<section class="section" style="background: var(--ivory);">
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;">
+    <div class="reveal-left">
+      <!-- PORTRAIT — replace with real photo -->
+      <!-- Image file: images/ronya-portrait.jpg -->
+      <div class="img-placeholder" style="aspect-ratio:3/4; position:relative;">
+        <img src="images/ronya-portrait.jpg" alt="Ronya Sane" class="portrait-img"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <span style="position:relative;z-index:1;font-size:0.65rem;letter-spacing:0.15em;color:rgba(184,151,90,0.5);text-align:center;padding:1rem;">
+          images/ronya-portrait.jpg
+        </span>
+      </div>
+    </div>
+
+    <div class="reveal-right">
+      <div class="section-label fi">Minusta</div>
+      <div class="section-label en">About me</div>
+      <h2 class="section-title fi">Intohimoni on <em>hevoset</em></h2>
+      <h2 class="section-title en">My passion is <em>horses</em></h2>
+      <p style="font-size:0.95rem; line-height:1.9; color:var(--text-light); margin-bottom:1.2rem;" class="fi">
+        Olen –98 syntynyt yrittäjä Inkoon Degerbystä. Olen ratsastanut vuodesta 2002 ja minulla on ollut omia hevosia vuodesta 2008. Tarjoan erilaisia hevosalan palveluita yli 20 vuoden kokemuksella.
+      </p>
+      <p style="font-size:0.95rem; line-height:1.9; color:var(--text-light); margin-bottom:1.2rem;" class="en">
+        Born in 1998, I am an equestrian entrepreneur from Degerby, Inkoo. I have been riding since 2002 and have owned horses since 2008, offering a wide range of equestrian services with over 20 years of experience.
+      </p>
+      <p style="font-size:0.95rem; line-height:1.9; color:var(--text-light); margin-bottom:2rem;" class="fi">
+        Sijaitsemme rauhallisella alueella Kopparnäsin virkistysalueen lähellä. Käytössämme on valaistu ratsastuskenttä, hiekkateitä ja metsäpolkuja.
+      </p>
+      <p style="font-size:0.95rem; line-height:1.9; color:var(--text-light); margin-bottom:2rem;" class="en">
+        We are located in a peaceful area near the Kopparnäs recreational area, with a floodlit riding arena, gravel roads and forest trails at our disposal.
+      </p>
+      <a href="about.html" class="btn btn-primary fi">Lue lisää</a>
+      <a href="about.html" class="btn btn-primary en">Read more</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES PREVIEW ══ -->
+<section class="section section-cream">
+  <div class="reveal">
+    <div class="section-label fi">Palvelut</div>
+    <div class="section-label en">Services</div>
+    <h2 class="section-title fi">Mitä <em>tarjoan</em></h2>
+    <h2 class="section-title en">What I <em>offer</em></h2>
+    <p class="section-intro fi">Monipuolisia hevosalan palveluita harrastajille, perheille ja yrityksille.</p>
+    <p class="section-intro en">Versatile equestrian services for enthusiasts, families and businesses.</p>
+  </div>
+
+  <div class="card-grid-3">
+    <div class="card reveal">
+      <div class="card-icon">🎯</div>
+      <div class="card-title fi">Valmennus</div>
+      <div class="card-title en">Coaching</div>
+      <p class="card-text fi">Yksityis- ja ryhmävalmennusta omalla hevosella. Koulua ja esteitä kaikentasoisille.</p>
+      <p class="card-text en">Private and group coaching on your own horse. Dressage and show jumping for all levels.</p>
+      <div class="card-price">40€ <span class="card-price-unit fi">/h</span><span class="card-price-unit en">/h</span></div>
+    </div>
+    <div class="card reveal delay-1">
+      <div class="card-icon">🌱</div>
+      <div class="card-title fi">Ratsastustunti</div>
+      <div class="card-title en">Riding lesson</div>
+      <p class="card-text fi">Tunti tallin hevosilla, sisältää opastuksen hevosen hoitoon tarvittaessa.</p>
+      <p class="card-text en">Lesson on the stable's horses, including horse care guidance if needed.</p>
+      <div class="card-price">55€ <span class="card-price-unit fi">/h</span><span class="card-price-unit en">/h</span></div>
+    </div>
+    <div class="card reveal delay-2">
+      <div class="card-icon">🎉</div>
+      <div class="card-title fi">Hevosen vierailu</div>
+      <div class="card-title en">Horse visit</div>
+      <p class="card-text fi">Hevosemme matkustavat kouluihin, sairaaloihin ja tapahtumiin 80 km säteellä.</p>
+      <p class="card-text en">Our horses travel to schools, hospitals and events within 80 km of Inkoo.</p>
+      <div class="card-price">50€ <span class="card-price-unit fi">alkaen</span><span class="card-price-unit en">from</span></div>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:3rem;">
+    <a href="services.html" class="btn btn-primary fi">Kaikki palvelut &amp; hinnat</a>
+    <a href="services.html" class="btn btn-primary en">All services &amp; prices</a>
+  </div>
+</section>
+
+<!-- ══ HORSES TEASER ══ -->
+<section class="section section-dark">
+  <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1.5rem; margin-bottom:3rem;">
+    <div class="reveal">
+      <div class="section-label fi" style="color:var(--gold-light);">Hevoset</div>
+      <div class="section-label en" style="color:var(--gold-light);">Horses</div>
+      <h2 class="section-title section-title-light fi">Tallimme <em>asukkaat</em></h2>
+      <h2 class="section-title section-title-light en">The stable's <em>residents</em></h2>
+    </div>
+    <a href="horses.html" class="btn btn-outline reveal fi">Tutustu hevosiin</a>
+    <a href="horses.html" class="btn btn-outline reveal en">Meet the horses</a>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px;">
+    <!-- Horse gallery — replace images/gallery-1.jpg through gallery-3.jpg -->
+    <div class="img-placeholder reveal" style="aspect-ratio:1/1;">
+      <img src="images/gallery-1.jpg" alt="Takku" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      <span style="position:relative;z-index:1;font-size:0.6rem;letter-spacing:0.12em;color:rgba(184,151,90,0.4);text-align:center;padding:0.5rem;">gallery-1.jpg</span>
+    </div>
+    <div class="img-placeholder reveal delay-1" style="aspect-ratio:1/1;">
+      <img src="images/gallery-2.jpg" alt="Elvis" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      <span style="position:relative;z-index:1;font-size:0.6rem;letter-spacing:0.12em;color:rgba(184,151,90,0.4);text-align:center;padding:0.5rem;">gallery-2.jpg</span>
+    </div>
+    <div class="img-placeholder reveal delay-2" style="aspect-ratio:1/1;">
+      <img src="images/gallery-3.jpg" alt="Beso" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      <span style="position:relative;z-index:1;font-size:0.6rem;letter-spacing:0.12em;color:rgba(184,151,90,0.4);text-align:center;padding:0.5rem;">gallery-3.jpg</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA BANNER ══ -->
+<section style="background:var(--gold); padding:4rem 5%; text-align:center;">
+  <h2 style="font-family:'Cormorant Garamond',serif; font-weight:300; font-size:clamp(1.8rem,4vw,3rem); color:var(--forest); margin-bottom:1rem;" class="reveal fi">
+    Kiinnostuitko? <em style="font-style:italic;">Ota yhteyttä!</em>
+  </h2>
+  <h2 style="font-family:'Cormorant Garamond',serif; font-weight:300; font-size:clamp(1.8rem,4vw,3rem); color:var(--forest); margin-bottom:1rem;" class="reveal en">
+    Interested? <em style="font-style:italic;">Get in touch!</em>
+  </h2>
+  <p style="font-size:0.9rem; color:rgba(28,43,30,0.7); margin-bottom:2rem; max-width:500px; margin-inline:auto; line-height:1.7;" class="reveal fi">
+    Kysy rohkeasti myös palveluista, joita ei ole sivuillani mainittu!
+  </p>
+  <p style="font-size:0.9rem; color:rgba(28,43,30,0.7); margin-bottom:2rem; max-width:500px; margin-inline:auto; line-height:1.7;" class="reveal en">
+    Don't hesitate to ask about services not listed on these pages!
+  </p>
+  <a href="contact.html" class="btn reveal" style="background:var(--forest); color:var(--cream); border-color:var(--forest);">
+    <span class="fi">Yhteydenottolomake</span>
+    <span class="en">Contact form</span>
+  </a>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div>
+      <div class="footer-brand-name">Ronya Sane</div>
+      <div class="footer-brand-sub fi">Tmi · Hevosalan palvelut</div>
+      <div class="footer-brand-sub en">Sole trader · Equestrian services</div>
+      <p class="footer-tagline fi">"En tiedä mitään parempaa kuin tunne, kun onnistuu jossain hevosen koulutuksessa."</p>
+      <p class="footer-tagline en">"I know nothing better than the feeling of succeeding in training a horse."</p>
+    </div>
+    <div>
+      <div class="footer-col-title fi">Sivut</div>
+      <div class="footer-col-title en">Pages</div>
+      <ul class="footer-links fi">
+        <li><a href="index.html">Etusivu</a></li>
+        <li><a href="about.html">Minusta</a></li>
+        <li><a href="horses.html">Hevoset</a></li>
+        <li><a href="services.html">Palvelut &amp; hinnasto</a></li>
+        <li><a href="contact.html">Yhteystiedot</a></li>
+      </ul>
+      <ul class="footer-links en">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="horses.html">Horses</a></li>
+        <li><a href="services.html">Services &amp; pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title fi">Yhteystiedot</div>
+      <div class="footer-col-title en">Contact</div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-item-icon">📍</div>
+        <div class="footer-contact-item-text">Degerby, Inkoo<br><span class="fi">Kopparnäsin lähellä</span><span class="en">Near Kopparnäs</span></div>
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-item-icon">💳</div>
+        <div class="footer-contact-item-text fi">Käteinen · Mobile Pay · Tiliirto · Laskutus</div>
+        <div class="footer-contact-item-text en">Cash · Mobile Pay · Transfer · Invoice</div>
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-item-icon">🛡️</div>
+        <div class="footer-contact-item-text fi">Vastuu- ja oikeusturvavakuutus</div>
+        <div class="footer-contact-item-text en">Liability &amp; legal expenses insurance</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Tmi Ronya Sane · Degerby, Inkoo</div>
+    <div class="footer-copy fi">Kaikki oikeudet pidätetään</div>
+    <div class="footer-copy en">All rights reserved</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

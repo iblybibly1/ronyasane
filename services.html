@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palvelut &amp; hinnasto – RonyaSane</title>
+  <meta name="description" content="Valmennus, ratsutus, hevosvierailut, koulutus-täysihoito ja paljon muuta. Hinnat ja lisätiedot.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Services layout */
+    .services-intro-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .travel-note {
+      background: rgba(184,151,90,0.08);
+      border-left: 2px solid var(--gold);
+      padding: 1rem 1.2rem;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      max-width: 340px;
+    }
+
+    /* Service card extended */
+    .svc-card {
+      background: var(--ivory);
+      border: 1px solid rgba(27,43,30,0.08);
+      padding: 2.5rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.35s, transform 0.35s;
+    }
+
+    .svc-card:hover {
+      box-shadow: 0 16px 40px rgba(27,43,30,0.09);
+      transform: translateY(-5px);
+    }
+
+    .svc-card.dark {
+      background: var(--forest);
+    }
+
+    .svc-card.gold-accent {
+      border-top: 3px solid var(--gold);
+    }
+
+    .svc-icon {
+      width: 46px; height: 46px;
+      border: 1px solid rgba(184,151,90,0.35);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem;
+      color: var(--gold);
+      margin-bottom: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .svc-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--forest);
+      margin-bottom: 0.6rem;
+      line-height: 1.15;
+    }
+
+    .svc-card.dark .svc-name { color: var(--cream); }
+
+    .svc-desc {
+      font-size: 0.84rem;
+      color: var(--text-light);
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+
+    .svc-card.dark .svc-desc { color: rgba(245,240,232,0.5); }
+
+    .svc-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      margin-top: auto;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(27,43,30,0.07);
+    }
+
+    .svc-card.dark .svc-price-row { border-top-color: rgba(245,240,232,0.07); }
+
+    .svc-price-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.1rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .svc-price-unit {
+      font-size: 0.72rem;
+      color: var(--text-light);
+      letter-spacing: 0.05em;
+    }
+
+    .svc-card.dark .svc-price-unit { color: rgba(245,240,232,0.35); }
+
+    /* Full board */
+    .fullboard-block {
+      background: var(--forest);
+      padding: 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      margin: 4rem 0;
+    }
+
+    .fullboard-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .fullboard-title em { font-style: italic; color: var(--gold-light); }
+
+    .fullboard-desc {
+      font-size: 0.88rem;
+      color: rgba(245,240,232,0.5);
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+    }
+
+    .fullboard-price-display {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .fullboard-price-sub {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: rgba(245,240,232,0.35);
+      text-transform: uppercase;
+    }
+
+    .fullboard-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .fullboard-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      font-size: 0.85rem;
+      color: rgba(245,240,232,0.55);
+      line-height: 1.6;
+    }
+
+    .fullboard-list li::before {
+      content: '—';
+      color: var(--gold);
+      opacity: 0.6;
+      flex-shrink: 0;
+      margin-top: 0.05em;
+    }
+
+    /* Visit prices table */
+    .visit-section {
+      background: var(--cream);
+      padding: 4rem;
+      margin-bottom: 0;
+    }
+
+    .visit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .price-table { width: 100%; border-collapse: collapse; }
+
+    .price-table tr {
+      border-bottom: 1px solid rgba(27,43,30,0.07);
+      transition: background 0.2s;
+    }
+
+    .price-table tr:hover { background: rgba(184,151,90,0.04); }
+
+    .price-table td {
+      padding: 1rem 0.5rem;
+      font-size: 0.84rem;
+    }
+
+    .price-table td:first-child { color: var(--text-body); }
+    .price-table td:last-child {
+      text-align: right;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      font-weight: 300;
+    }
+
+    /* payment methods */
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 2rem;
+    }
+
+    .pay-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(27,43,30,0.12);
+      padding: 0.5rem 1rem;
+      color: var(--text-light);
+    }
+
+    /* Can help with list */
+    .help-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    .help-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 0.83rem;
+      color: rgba(245,240,232,0.55);
+    }
+
+    .help-item::before {
+      content: '▪';
+      color: var(--gold);
+      font-size: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 900px) {
+      .fullboard-block { grid-template-columns: 1fr; gap: 2.5rem; padding: 2.5rem; }
+      .visit-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .visit-section { padding: 2.5rem; }
+      .help-list { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .services-intro-row { flex-direction: column; }
+      .travel-note { max-width: 100%; }
+    }
+  </style>
+</head>
+<body class="lang-fi">
+
+<div id="page-transition" class="page-transition"></div>
+
+<header class="site-header">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-img-fallback">🐴</div>
+    <div>
+      <div class="nav-logo-text">RonyaSane</div>
+      <div class="nav-logo-sub fi">Hevosalan palvelut</div>
+      <div class="nav-logo-sub en">Equestrian Services</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="fi">Etusivu</a><a href="index.html" class="en">Home</a></li>
+    <li><a href="about.html" class="fi">Minusta</a><a href="about.html" class="en">About</a></li>
+    <li><a href="horses.html" class="fi">Hevoset</a><a href="horses.html" class="en">Horses</a></li>
+    <li><a href="services.html" class="fi">Palvelut</a><a href="services.html" class="en">Services</a></li>
+    <li><a href="contact.html" class="fi">Yhteystiedot</a><a href="contact.html" class="en">Contact</a></li>
+  </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="fi">FI</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+  <button class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<nav class="nav-drawer">
+  <a href="index.html" class="fi">Etusivu</a><a href="index.html" class="en">Home</a>
+  <a href="about.html" class="fi">Minusta</a><a href="about.html" class="en">About</a>
+  <a href="horses.html" class="fi">Hevoset</a><a href="horses.html" class="en">Horses</a>
+  <a href="services.html" class="fi">Palvelut &amp; hinnasto</a><a href="services.html" class="en">Services &amp; pricing</a>
+  <a href="contact.html" class="fi">Yhteystiedot</a><a href="contact.html" class="en">Contact</a>
+  <div class="nav-drawer-lang">
+    <button class="lang-btn" data-lang="fi">FI</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="page-eyebrow fi">Tmi Ronya Sane</div>
+    <div class="page-eyebrow en">Tmi Ronya Sane</div>
+    <h1 class="page-title fi">Palvelut &amp; <em>hinnasto</em></h1>
+    <h1 class="page-title en">Services &amp; <em>pricing</em></h1>
+    <div class="page-hero-line"></div>
+  </div>
+</div>
+
+<!-- MAIN SERVICES -->
+<section class="section" style="background:var(--ivory);">
+  <div class="services-intro-row reveal">
+    <div>
+      <div class="section-label fi">Mitä tarjoan</div>
+      <div class="section-label en">What I offer</div>
+      <h2 class="section-title fi">Palvelut <em>sinulle</em></h2>
+      <h2 class="section-title en">Services <em>for you</em></h2>
+    </div>
+    <div class="travel-note fi">Hintoihin lisätään matkakulut <strong>0,60 €/km</strong> kun matka yli 20 km Degerbystä. Hinnat sisältävät ALV. Kysy rohkeasti myös palveluista, joita ei ole mainittu!</div>
+    <div class="travel-note en">Travel costs of <strong>€0.60/km</strong> are added for distances over 20 km from Degerby. All prices include VAT. Feel free to ask about services not listed here!</div>
+  </div>
+
+  <div class="card-grid-3">
+    <div class="svc-card gold-accent reveal">
+      <div class="svc-icon">🎯</div>
+      <div class="svc-name fi">Yksityisvalmennus</div>
+      <div class="svc-name en">Private coaching</div>
+      <p class="svc-desc fi">Valmennus omalla hevosella. Koulua ja esteitä harrastajille ja seuratasolla kilpaileville. Tulen myös sinun tallillesi!</p>
+      <p class="svc-desc en">Coaching on your own horse. Dressage and show jumping for leisure riders and club-level competitors. I can come to your stable too!</p>
+      <div class="svc-price-row">
+        <span class="svc-price-amount">40€</span>
+        <span class="svc-price-unit fi">/tunti</span>
+        <span class="svc-price-unit en">/hour</span>
+      </div>
+    </div>
+
+    <div class="svc-card gold-accent reveal delay-1">
+      <div class="svc-icon">👥</div>
+      <div class="svc-name fi">Ryhmävalmennus</div>
+      <div class="svc-name en">Group coaching</div>
+      <p class="svc-desc fi">2–3 ratsukkoa omilla hevosilla. Koulua tai esteitä. Sopii kaiken tasoisille.</p>
+      <p class="svc-desc en">2–3 horse-and-rider pairs on their own horses. Dressage or show jumping. Suitable for all levels.</p>
+      <div class="svc-price-row">
+        <span class="svc-price-amount">25€</span>
+        <span class="svc-price-unit fi">/h/ratsukko</span>
+        <span class="svc-price-unit en">/h/rider</span>
+      </div>
+    </div>
+
+    <div class="svc-card gold-accent reveal delay-2">
+      <div class="svc-icon">🐴</div>
+      <div class="svc-name fi">Ratsastustunti</div>
+      <div class="svc-name en">Riding lesson</div>
+      <p class="svc-desc fi">Tunti tallin hevosilla. Sisältää opastuksen hevosen hoitoon tarvittaessa. Ei vaadi omaa hevosta.</p>
+      <p class="svc-desc en">Lesson on the stable's own horses. Includes horse care guidance if needed. No own horse required.</p>
+      <div class="svc-price-row">
+        <span class="svc-price-amount">55€</span>
+        <span class="svc-price-unit fi">/tunti</span>
+        <span class="svc-price-unit en">/hour</span>
+      </div>
+    </div>
+
+    <div class="svc-card reveal">
+      <div class="svc-icon">🌱</div>
+      <div class="svc-name fi">Talutusratsastus</div>
+      <div class="svc-name en">Led rides</div>
+      <p class="svc-desc fi">Shetlanninponilla tai eestinhevosella. Sisältää kuntoonlaiton ja n. 20–30 min ratsastuksen. Myös tapahtumissa.</p>
+      <p class="svc-desc en">On Shetland pony or Estonian horse. Includes horse preparation and approx. 20–30 min riding. Available at events too.</p>
+      <div class="svc-price-row">
+        <span class="svc-price-amount">30€</span>
+        <span class="svc-price-unit fi">/1 lapsi &nbsp;·&nbsp; 2–3 lasta 50€</span>
+        <span class="svc-price-unit en">/1 child &nbsp;·&nbsp; 2–3 children 50€</span>
+      </div>
+    </div>
+
+    <div class="svc-card reveal delay-1">
+      <div class="svc-icon">⚙️</div>
+      <div class="svc-name fi">Ratsutus</div>
+      <div class="svc-name en">Riding-in</div>
+      <p class="svc-desc fi">Hevosen sisäänratsastus ja perustyöskentely. Kilpailutus, muut koulutukset tapauskohtaisesti.</p>
+      <p class="svc-desc en">Riding-in and basic schooling. Competition and other training priced individually.</p>
+      <div class="svc-price-row">
+        <span class="svc-price-amount">30€</span>
+        <span class="svc-price-unit fi">/kerta</span>
+        <span class="svc-price-unit en">/session</span>
+      </div>
+    </div>
+
+    <div class="svc-card reveal delay-2">
+      <div class="svc-icon">✨</div>
+      <div class="svc-name fi">Taitokurssi</div>
+      <div class="svc-name en">Skills workshop</div>
+      <p class="svc-desc fi">Opettele ratsastuksen ulkopuolisia taitoja: lastaus, ajaminen, ohjasajo, juoksuttaminen, haavojen hoito. Yksin tai ryhmässä.</p>
+      <p class="svc-desc en">Learn skills beyond riding: loading, driving, long-reining, lunge work, wound care. Solo or in a group.</p>
+      <div class="svc-price-row">
+        <span class="svc-price-amount">40€</span>
+        <span class="svc-price-unit fi">alkaen/kerta</span>
+        <span class="svc-price-unit en">from/session</span>
+      </div>
+    </div>
+
+    <div class="svc-card reveal">
+      <div class="svc-icon">🎉</div>
+      <div class="svc-name fi">Ponisynttärit</div>
+      <div class="svc-name en">Pony birthday parties</div>
+      <p class="svc-desc fi">Meidän tallilla tai teidän kotona. Yhteistyössä NEPSY- ja eläinavusteiseen valmennukseen koulutetun yrittäjän kanssa — lukuisia paketteja!</p>
+      <p class="svc-desc en">At our stable or at your home. In collaboration with a NEPSY and animal-assisted coaching specialist — many packages available!</p>
+      <div class="svc-price-row">
+        <span class="svc-price-amount fi" style="font-size:1.4rem;">Kysy tarjous</span>
+        <span class="svc-price-amount en" style="font-size:1.4rem;">Ask for quote</span>
+      </div>
+    </div>
+
+    <div class="svc-card reveal delay-1">
+      <div class="svc-icon">🤝</div>
+      <div class="svc-name fi">Lomitus &amp; apukädet</div>
+      <div class="svc-name en">Stable help</div>
+      <p class="svc-desc fi">Lomitusta ja apukäsiä tallihommiin. Ota yhteyttä — keksitään yhdessä sopiva ratkaisu!</p>
+      <p class="svc-desc en">Holiday cover and extra hands for stable work. Get in touch — we'll find the right solution together!</p>
+      <div class="svc-price-row">
+        <span class="svc-price-amount fi" style="font-size:1.4rem;">Sovitaan</span>
+        <span class="svc-price-amount en" style="font-size:1.4rem;">By agreement</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- I CAN ALSO HELP WITH -->
+<section class="section section-dark">
+  <div class="reveal">
+    <div class="section-label fi" style="color:var(--gold-light);">Lisäksi</div>
+    <div class="section-label en" style="color:var(--gold-light);">Additionally</div>
+    <h2 class="section-title section-title-light fi">Voin auttaa <em>myös</em></h2>
+    <h2 class="section-title section-title-light en">I can also <em>help with</em></h2>
+  </div>
+  <div class="help-list reveal">
+    <div class="help-item fi">Perusasioiden opetus (juoksutus, ohjasajo, irtohypytys, taluttaminen)</div>
+    <div class="help-item en">Basic training (lungeing, long-reining, loose jumping, leading)</div>
+    <div class="help-item fi">Sisäänratsastuksessa ja siedätyksessä</div>
+    <div class="help-item en">Backing and desensitisation</div>
+    <div class="help-item fi">Nuoren hevosen kilpailuttamisessa</div>
+    <div class="help-item en">First competition experience for young horses</div>
+    <div class="help-item fi">Näyttelyvalmistautumisessa ja -esittämisessä</div>
+    <div class="help-item en">Show preparation and presentation</div>
+    <div class="help-item fi">Hevosen läpiratsastuksessa/eteenpäin viennissä</div>
+    <div class="help-item en">Riding-through and progression</div>
+    <div class="help-item fi">Luottamus- tai lastausongelmissa</div>
+    <div class="help-item en">Trust or loading problems</div>
+    <div class="help-item fi">NEPSY- ja eläinavusteinen valmennus (yhteistyö)</div>
+    <div class="help-item en">NEPSY &amp; animal-assisted coaching (collaboration)</div>
+    <div class="help-item fi">Valokuvaus, päiväleirit, vanhempi-lapsi päivät</div>
+    <div class="help-item en">Photography, day camps, parent-child days</div>
+  </div>
+</section>
+
+<!-- FULL BOARD TRAINING -->
+<section class="section" style="background:var(--ivory); padding-bottom:0;">
+  <div class="reveal">
+    <div class="section-label fi">Hevosesi meille</div>
+    <div class="section-label en">Your horse with us</div>
+  </div>
+  <div class="fullboard-block reveal">
+    <div>
+      <h2 class="fullboard-title fi">Koulutus-<em>täysihoito</em></h2>
+      <h2 class="fullboard-title en">Training <em>full board</em></h2>
+      <p class="fullboard-desc fi">Tarvitsetko sisäänratsastajan hevosellesi? Haluaisitko nauttia ratsastuksesta ilman, että hevosesi säpsyilee joka suuntaan? Koulutukseen voidaan ottaa kaiken ikäisiä, rotuisia, kokoisia ja sukupuolisia hevosia ja poneja.</p>
+      <p class="fullboard-desc en">Do you need someone to ride-in your horse? Would you like to enjoy riding without your horse startling in every direction? We accept horses and ponies of any age, breed, size and sex for training.</p>
+      <div class="fullboard-price-display">700–1000€</div>
+      <div class="fullboard-price-sub fi">/kuukaudessa · sisältää täysihoidon</div>
+      <div class="fullboard-price-sub en">/month · includes full livery</div>
+    </div>
+    <div>
+      <ul class="fullboard-list fi">
+        <li>3–6 työskentelypäivää viikossa yksilöllisiin tarpeisiin ja omistajan tavoitteisiin suhteutettuna</li>
+        <li>Kuivaheinäruokinta 4 krt/vrk, väkirehut 2 krt/vrk</li>
+        <li>Tarhaus klo 6–22 tai sään mukaan</li>
+        <li>Karsinapaikka lämpimässä ulkotallissa</li>
+        <li>Loimitus ja suojitus tarpeen mukaan</li>
+        <li>Ratsutus onnistuu vain isoille poneille ja hevosille; pienet ponit voivat tulla lastauskoulutukseen, käytöstapakoulutukseen, siedättämiseen ym.</li>
+      </ul>
+      <ul class="fullboard-list en">
+        <li>3–6 working days per week, tailored to individual needs and owner goals</li>
+        <li>Dry hay 4×/day, concentrate feed 2×/day</li>
+        <li>Turn-out 6 am–10 pm or weather permitting</li>
+        <li>Box in a warm outdoor stable</li>
+        <li>Rugging and protection as needed</li>
+        <li>Ridden work for large ponies and horses only; smaller ponies welcome for loading, manners, desensitisation etc.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HORSE VISITS -->
+<section class="section" style="background:var(--ivory); padding-top:0;">
+  <div class="visit-section reveal">
+    <div class="section-label fi" style="margin-bottom:0.8rem;">Hevosen vierailut</div>
+    <div class="section-label en" style="margin-bottom:0.8rem;">Horse visits</div>
+    <div class="visit-grid">
+      <div>
+        <h2 class="section-title fi" style="font-size:2rem; margin-bottom:1rem;">Hevosemme <em>tulevat luoksesi</em></h2>
+        <h2 class="section-title en" style="font-size:2rem; margin-bottom:1rem;">Our horses <em>come to you</em></h2>
+        <p style="font-size:0.86rem; color:var(--text-light); line-height:1.85; margin-bottom:1rem;" class="fi">
+          Hevosemme matkustavat mielellään kouluihin, sairaaloihin, tapahtumiin ym. noin 80 km säteellä Inkoosta. Hevonen voi tulla siliteltäväksi, harjattavaksi, talutusratsastukseen tai kärryajeluun.
+        </p>
+        <p style="font-size:0.86rem; color:var(--text-light); line-height:1.85; margin-bottom:1rem;" class="en">
+          Our horses happily travel to schools, hospitals, events and more within about 80 km of Inkoo. The horse can come to be petted, groomed, for leading rides or carriage drives.
+        </p>
+        <p style="font-size:0.82rem; color:var(--text-light); line-height:1.75; font-style:italic;" class="fi">
+          Mukaan voi tulla myös terapiakoulutettu koira tai pienet kanit. Hintoihin lisätään matkakulut 20 km jälkeen 1 €/km.
+        </p>
+        <p style="font-size:0.82rem; color:var(--text-light); line-height:1.75; font-style:italic;" class="en">
+          A therapy-trained dog or small rabbits can also accompany. Travel costs of €1/km added after first 20 km.
+        </p>
+      </div>
+      <div>
+        <table class="price-table">
+          <tr>
+            <td class="fi">Rapsuttelu-/talutusponi — lähtömaksu</td>
+            <td class="en">Petting/leading pony — start fee</td>
+            <td>50€</td>
+          </tr>
+          <tr>
+            <td class="fi">+ tuntihinta</td>
+            <td class="en">+ hourly rate</td>
+            <td>50€/h</td>
+          </tr>
+          <tr>
+            <td class="fi">Poni kärryjen kanssa — lähtömaksu</td>
+            <td class="en">Pony with carriage — start fee</td>
+            <td>80€</td>
+          </tr>
+          <tr>
+            <td class="fi">+ tuntihinta</td>
+            <td class="en">+ hourly rate</td>
+            <td>50€/h</td>
+          </tr>
+          <tr>
+            <td class="fi">Poni + hevonen — lähtömaksu</td>
+            <td class="en">Pony + horse — start fee</td>
+            <td>100€</td>
+          </tr>
+          <tr>
+            <td class="fi">+ tuntihinta</td>
+            <td class="en">+ hourly rate</td>
+            <td>50€/h</td>
+          </tr>
+        </table>
+        <p style="font-size:0.75rem; color:var(--text-light); margin-top:0.8rem; font-style:italic;" class="fi">+ mahdolliset matkakulut. Voit myös pyytää tarjouksen!</p>
+        <p style="font-size:0.75rem; color:var(--text-light); margin-top:0.8rem; font-style:italic;" class="en">+ possible travel costs. You can also request a quote!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section class="section-sm section-cream">
+  <div class="reveal">
+    <div class="section-label fi">Maksaminen</div>
+    <div class="section-label en">Payment</div>
+    <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:300; color:var(--forest); margin-bottom:0.5rem;" class="fi">Maksutavat</h3>
+    <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:300; color:var(--forest); margin-bottom:0.5rem;" class="en">Payment methods</h3>
+    <div class="payment-methods">
+      <div class="pay-pill">💵 <span class="fi">Käteinen</span><span class="en">Cash</span></div>
+      <div class="pay-pill">📱 Mobile Pay</div>
+      <div class="pay-pill">🏦 <span class="fi">Tiliirto</span><span class="en">Bank transfer</span></div>
+      <div class="pay-pill">🧾 <span class="fi">Laskutus (yritykset)</span><span class="en">Invoice (companies)</span></div>
+    </div>
+    <p style="font-size:0.8rem; color:var(--text-light); margin-top:1.5rem; line-height:1.7; border-left:2px solid rgba(184,151,90,0.4); padding-left:1rem;" class="fi">
+      ⚠️ Muistathan peruuttaa varatun tapaamisesi viimeistään 24h ennen sovittua aikaa, muuten perimme puolet palvelun hinnasta.
+    </p>
+    <p style="font-size:0.8rem; color:var(--text-light); margin-top:1.5rem; line-height:1.7; border-left:2px solid rgba(184,151,90,0.4); padding-left:1rem;" class="en">
+      ⚠️ Please remember to cancel a booked appointment at least 24 hours in advance; otherwise half the service fee will be charged.
+    </p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:var(--forest); padding:4rem 5%; text-align:center;">
+  <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:300; color:var(--cream); margin-bottom:1rem;" class="reveal fi">
+    Kysyttävää? <em style="font-style:italic; color:var(--gold-light);">Ota rohkeasti yhteyttä!</em>
+  </h2>
+  <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:300; color:var(--cream); margin-bottom:1rem;" class="reveal en">
+    Any questions? <em style="font-style:italic; color:var(--gold-light);">Don't hesitate to get in touch!</em>
+  </h2>
+  <div style="margin-top:1.5rem;" class="reveal">
+    <a href="contact.html" class="btn btn-primary fi">Yhteydenottolomake</a>
+    <a href="contact.html" class="btn btn-primary en">Contact form</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div>
+      <div class="footer-brand-name">Ronya Sane</div>
+      <div class="footer-brand-sub fi">Tmi · Hevosalan palvelut</div>
+      <div class="footer-brand-sub en">Sole trader · Equestrian services</div>
+      <p class="footer-tagline fi">"En tiedä mitään parempaa kuin tunne, kun onnistuu jossain hevosen koulutuksessa."</p>
+      <p class="footer-tagline en">"I know nothing better than the feeling of succeeding in training a horse."</p>
+    </div>
+    <div>
+      <div class="footer-col-title fi">Sivut</div>
+      <div class="footer-col-title en">Pages</div>
+      <ul class="footer-links fi"><li><a href="index.html">Etusivu</a></li><li><a href="about.html">Minusta</a></li><li><a href="horses.html">Hevoset</a></li><li><a href="services.html">Palvelut</a></li><li><a href="contact.html">Yhteystiedot</a></li></ul>
+      <ul class="footer-links en"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="horses.html">Horses</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title fi">Yhteystiedot</div>
+      <div class="footer-col-title en">Contact</div>
+      <div class="footer-contact-item"><div class="footer-contact-item-icon">📍</div><div class="footer-contact-item-text">Degerby, Inkoo</div></div>
+      <div class="footer-contact-item"><div class="footer-contact-item-icon">🛡️</div><div class="footer-contact-item-text fi">Vastuu- ja oikeusturvavakuutus</div><div class="footer-contact-item-text en">Liability &amp; legal insurance</div></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Tmi Ronya Sane · Degerby, Inkoo</div>
+    <div class="footer-copy fi">Kaikki oikeudet pidätetään</div>
+    <div class="footer-copy en">All rights reserved</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

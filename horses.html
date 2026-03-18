@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hevoset – RonyaSane</title>
+  <meta name="description" content="Tutustu RonyaSanen hevosiin: Takku, Elvis, Beso ja muut. Jokaisen tarina.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .horses-intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 5rem;
+      align-items: center;
+    }
+
+    .horse-profile {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 3.5rem;
+      align-items: start;
+      padding: 4rem 0;
+      border-bottom: 1px solid rgba(27,43,30,0.07);
+    }
+
+    .horse-profile:last-child { border-bottom: none; }
+
+    .horse-profile.reverse { direction: rtl; }
+    .horse-profile.reverse > * { direction: ltr; }
+
+    .horse-img-wrap { position: relative; }
+
+    .horse-img-box {
+      aspect-ratio: 4/3;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .horse-img-box img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .horse-img-box:hover img { transform: scale(1.04); }
+
+    .horse-img-accent {
+      position: absolute;
+      top: -10px; left: -10px;
+      width: 40%; height: 40%;
+      border-top: 1px solid rgba(184,151,90,0.4);
+      border-left: 1px solid rgba(184,151,90,0.4);
+      pointer-events: none;
+    }
+
+    .horse-year-badge {
+      position: absolute;
+      bottom: 1rem; right: 1rem;
+      background: rgba(15,26,16,0.85);
+      border: 1px solid rgba(184,151,90,0.3);
+      padding: 0.4rem 0.9rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .horse-status-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .horse-status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .horse-status-dot.grey { background: rgba(122,112,96,0.5); }
+
+    .horse-status-text {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    .horse-status-text.past { color: var(--text-light); }
+
+    .horse-name-big {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      font-weight: 300;
+      color: var(--forest);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .horse-breed-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+
+    .horse-bio { font-size: 0.9rem; color: var(--text-light); line-height: 1.85; margin-bottom: 1.2rem; }
+
+    .horse-highlights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+    }
+
+    .highlight-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      border: 1px solid rgba(27,43,30,0.12);
+      padding: 0.3rem 0.8rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+    }
+
+    /* Past horses grid */
+    .past-horses-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .past-horse-card {
+      background: rgba(245,240,232,0.6);
+      border: 1px solid rgba(27,43,30,0.08);
+      padding: 1.8rem 1.5rem;
+      position: relative;
+    }
+
+    .past-horse-img {
+      aspect-ratio: 1/1;
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+    }
+
+    .past-horse-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: sepia(0.3) brightness(0.9);
+      transition: filter 0.4s;
+    }
+
+    .past-horse-card:hover .past-horse-img img {
+      filter: sepia(0) brightness(1);
+    }
+
+    .past-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--forest);
+      margin-bottom: 0.2rem;
+    }
+
+    .past-years {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .past-desc { font-size: 0.8rem; color: var(--text-light); line-height: 1.7; }
+
+    @media (max-width: 900px) {
+      .horse-profile { grid-template-columns: 1fr; gap: 2rem; }
+      .horse-profile.reverse { direction: ltr; }
+      .past-horses-grid { grid-template-columns: repeat(2, 1fr); }
+      .horses-intro-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 500px) {
+      .past-horses-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="lang-fi">
+
+<div id="page-transition" class="page-transition"></div>
+
+<header class="site-header">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-img-fallback">🐴</div>
+    <div>
+      <div class="nav-logo-text">RonyaSane</div>
+      <div class="nav-logo-sub fi">Hevosalan palvelut</div>
+      <div class="nav-logo-sub en">Equestrian Services</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="fi">Etusivu</a><a href="index.html" class="en">Home</a></li>
+    <li><a href="about.html" class="fi">Minusta</a><a href="about.html" class="en">About</a></li>
+    <li><a href="horses.html" class="fi">Hevoset</a><a href="horses.html" class="en">Horses</a></li>
+    <li><a href="services.html" class="fi">Palvelut</a><a href="services.html" class="en">Services</a></li>
+    <li><a href="contact.html" class="fi">Yhteystiedot</a><a href="contact.html" class="en">Contact</a></li>
+  </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="fi">FI</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+  <button class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<nav class="nav-drawer">
+  <a href="index.html" class="fi">Etusivu</a><a href="index.html" class="en">Home</a>
+  <a href="about.html" class="fi">Minusta</a><a href="about.html" class="en">About</a>
+  <a href="horses.html" class="fi">Hevoset</a><a href="horses.html" class="en">Horses</a>
+  <a href="services.html" class="fi">Palvelut &amp; hinnasto</a><a href="services.html" class="en">Services &amp; pricing</a>
+  <a href="contact.html" class="fi">Yhteystiedot</a><a href="contact.html" class="en">Contact</a>
+  <div class="nav-drawer-lang">
+    <button class="lang-btn" data-lang="fi">FI</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="page-eyebrow fi">Tallimme asukkaat</div>
+    <div class="page-eyebrow en">The stable's residents</div>
+    <h1 class="page-title fi">Hevoseni ja <em>tarinani</em></h1>
+    <h1 class="page-title en">My horses and <em>their stories</em></h1>
+    <div class="page-hero-line"></div>
+  </div>
+</div>
+
+<!-- CURRENT HORSES -->
+<section class="section" style="background:var(--ivory);">
+  <div class="reveal" style="margin-bottom:1rem;">
+    <div class="section-label fi">Tallissa nyt</div>
+    <div class="section-label en">Currently in the stable</div>
+    <h2 class="section-title fi">Aktiiviset <em>ratsut</em></h2>
+    <h2 class="section-title en">Active <em>horses</em></h2>
+  </div>
+
+  <!-- TAKKU -->
+  <div class="horse-profile reveal">
+    <div class="horse-img-wrap">
+      <div class="horse-img-box img-placeholder">
+        <!-- Image file: images/horse-takku.jpg -->
+        <img src="images/horse-takku.jpg" alt="Takku" class="horse-img">
+        <span style="position:absolute;bottom:0.5rem;left:50%;transform:translateX(-50%);font-size:0.6rem;letter-spacing:0.1em;color:rgba(184,151,90,0.5);white-space:nowrap;">horse-takku.jpg</span>
+      </div>
+      <div class="horse-img-accent"></div>
+      <div class="horse-year-badge">2017 →</div>
+    </div>
+    <div>
+      <div class="horse-status-wrap">
+        <div class="horse-status-dot"></div>
+        <div class="horse-status-text fi">Tallissa · aktiivinen</div>
+        <div class="horse-status-text en">In stable · active</div>
+      </div>
+      <div class="horse-name-big">Takku</div>
+      <div class="horse-breed-tag fi">Hopeanmusta · Saapui 2017</div>
+      <div class="horse-breed-tag en">Silver-black · Arrived 2017</div>
+      <p class="horse-bio fi">Takku tuli suomeen 2017 syksyllä 10 kk iässä. Hän kasvoi hitaasti ja se otettiin huomioon koulutuksessa. Nyt meillä on luotettava, jokaiselle ratsastajalle sopiva ratsu, joka osaa toimia aloittelijoiden kanssa ja taitavammalla ratsastajalla suorittaa tasaisesti HeA ja 90–100 cm tasolla.</p>
+      <p class="horse-bio en">Takku arrived in Finland in autumn 2017 at 10 months of age. He grew slowly and that was taken into account in his training. Today he is a reliable mount suitable for every rider, capable of working with beginners while performing consistently at HeA and 90–100 cm level with a more experienced rider.</p>
+      <p class="horse-bio fi">Itse olen kilpaillut Takulla seuratasolla HeB–HeA mukavilla tuloksilla. Esteillä olemme kilpailleet 80 cm tasolla useita puhtaita ratoja. Oppilaita Takku on opettanut kilpailuiden saloihin ja nostanut heidän tasoa 40 cm → 80 cm.</p>
+      <p class="horse-bio en">I have competed with Takku at club level in HeB–HeA with pleasing results. In show jumping we have competed at 80 cm level with multiple clear rounds. Takku has introduced students to the world of competition and raised their level from 40 cm to 80 cm.</p>
+      <div class="horse-highlights fi">
+        <span class="highlight-tag">HeB–HeA</span>
+        <span class="highlight-tag">80cm esteet</span>
+        <span class="highlight-tag">Sopii aloittelijoille</span>
+        <span class="highlight-tag">Kilpailukokenut</span>
+      </div>
+      <div class="horse-highlights en">
+        <span class="highlight-tag">HeB–HeA</span>
+        <span class="highlight-tag">80cm jumping</span>
+        <span class="highlight-tag">Beginner-friendly</span>
+        <span class="highlight-tag">Competition experienced</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BESO -->
+  <div class="horse-profile reverse reveal">
+    <div class="horse-img-wrap">
+      <div class="horse-img-box img-placeholder">
+        <!-- Image file: images/horse-beso.jpg -->
+        <img src="images/horse-beso.jpg" alt="Beso" class="horse-img">
+        <span style="position:absolute;bottom:0.5rem;left:50%;transform:translateX(-50%);font-size:0.6rem;letter-spacing:0.1em;color:rgba(184,151,90,0.5);white-space:nowrap;">horse-beso.jpg</span>
+      </div>
+      <div class="horse-img-accent"></div>
+      <div class="horse-year-badge">2021 →</div>
+    </div>
+    <div>
+      <div class="horse-status-wrap">
+        <div class="horse-status-dot" style="background:var(--gold-light);"></div>
+        <div class="horse-status-text fi">Tallissa · kilpailee</div>
+        <div class="horse-status-text en">In stable · competing</div>
+      </div>
+      <div class="horse-name-big">Beso</div>
+      <div class="horse-breed-tag fi">Espanjalainen · Saapui Espanjasta 2021</div>
+      <div class="horse-breed-tag en">Andalusian-type · Arrived from Spain 2021</div>
+      <p class="horse-bio fi">Beso saapui 2-vuotiaana Espanjasta Suomeen kesällä 2021. Beso sai kasvaa rauhassa ja opetella elämää. Rotunsa puolesta hyvin herkkä Beso on opettanut minulle aivan erilaista lähestymistapaa koulutukseen ja tuonut uusia näkökulmia "työkalupakkiin".</p>
+      <p class="horse-bio en">Beso arrived from Spain as a 2-year-old in summer 2021. He was given time to grow and learn about life. Highly sensitive by breed, Beso has taught me a completely different approach to training and brought new perspectives to the toolbox.</p>
+      <p class="horse-bio fi">Tällä hetkellä Beso kilpailee omalla tasollaan vielä hieman kisatilanteita harjoitellen, mutta osoittaa jo paljon potentiaalia.</p>
+      <p class="horse-bio en">Beso is currently competing at his own level, still practising competition situations, but already showing great potential.</p>
+      <div class="horse-highlights fi">
+        <span class="highlight-tag">Espanjalainen</span>
+        <span class="highlight-tag">Herkkä & lahjakas</span>
+        <span class="highlight-tag">Kilpailee</span>
+        <span class="highlight-tag">Suuri potentiaali</span>
+      </div>
+      <div class="horse-highlights en">
+        <span class="highlight-tag">Andalusian-type</span>
+        <span class="highlight-tag">Sensitive & talented</span>
+        <span class="highlight-tag">Competing</span>
+        <span class="highlight-tag">Great potential</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELVIS -->
+  <div class="horse-profile reveal">
+    <div class="horse-img-wrap">
+      <div class="horse-img-box img-placeholder">
+        <!-- Image file: images/horse-elvis.jpg -->
+        <img src="images/horse-elvis.jpg" alt="Elvis" class="horse-img">
+        <span style="position:absolute;bottom:0.5rem;left:50%;transform:translateX(-50%);font-size:0.6rem;letter-spacing:0.1em;color:rgba(184,151,90,0.5);white-space:nowrap;">horse-elvis.jpg</span>
+      </div>
+      <div class="horse-img-accent"></div>
+      <div class="horse-year-badge">2020 →</div>
+    </div>
+    <div>
+      <div class="horse-status-wrap">
+        <div class="horse-status-dot"></div>
+        <div class="horse-status-text fi">Tallissa · aktiivinen</div>
+        <div class="horse-status-text en">In stable · active</div>
+      </div>
+      <div class="horse-name-big">Elvis</div>
+      <div class="horse-breed-tag fi">Shetlanninponi · Saapui 2020</div>
+      <div class="horse-breed-tag en">Shetland Pony · Arrived 2020</div>
+      <p class="horse-bio fi">Elvis muutti pihaan 3-vuotiaana keväällä 2020 seuraponi-tehtävään. Alkuun hänen tehtäviinsä kuului vain seuran pitäminen ja pari kertaa viikossa kärryttely. Myöhemmin hän on toiminut täydellisenä talutus- ja rapsutteluponina sekä ratsuna napakoille, hieman kokeneemmille ratsastajille.</p>
+      <p class="horse-bio en">Elvis joined the stable as a 3-year-old in spring 2020 as a companion pony. Initially his job was simply to provide company and a couple of carriage sessions per week. He has since become the perfect leading and petting pony, as well as a mount for more experienced compact riders.</p>
+      <div class="horse-highlights fi">
+        <span class="highlight-tag">Shetlanninponi</span>
+        <span class="highlight-tag">Talutusratsastus</span>
+        <span class="highlight-tag">Kärryttely</span>
+        <span class="highlight-tag">Lapsille sopiva</span>
+      </div>
+      <div class="horse-highlights en">
+        <span class="highlight-tag">Shetland pony</span>
+        <span class="highlight-tag">Led rides</span>
+        <span class="highlight-tag">Carriage</span>
+        <span class="highlight-tag">Child-friendly</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAST HORSES -->
+<section class="section section-cream">
+  <div class="reveal">
+    <div class="section-label fi">Muistot</div>
+    <div class="section-label en">Memories</div>
+    <h2 class="section-title fi">Entiset <em>hevoseni</em></h2>
+    <h2 class="section-title en">Former <em>horses</em></h2>
+    <p class="section-intro fi">Jokainen heistä on jättänyt pysyvän jäljen sydämeeni.</p>
+    <p class="section-intro en">Each of them has left a permanent mark on my heart.</p>
+  </div>
+
+  <div class="past-horses-grid">
+    <div class="past-horse-card reveal">
+      <div class="past-horse-img img-placeholder">
+        <!-- Image file: images/horse-alfa.jpg -->
+        <img src="images/horse-alfa.jpg" alt="Alfa">
+        <span style="position:absolute;bottom:0.3rem;left:50%;transform:translateX(-50%);font-size:0.55rem;letter-spacing:0.1em;color:rgba(184,151,90,0.4);white-space:nowrap;">horse-alfa.jpg</span>
+      </div>
+      <div class="past-name">Alfa</div>
+      <div class="past-years">2008 – 2012</div>
+      <p class="past-desc fi">Connemararisteytys. Ensimmäinen omani. Opetti hauskanpidon, hyppäämisen ja kisaamisen.</p>
+      <p class="past-desc en">Connemara cross. My very first. Taught me fun, jumping and competing.</p>
+    </div>
+    <div class="past-horse-card reveal delay-1">
+      <div class="past-horse-img img-placeholder">
+        <!-- Image file: images/horse-admi.jpg -->
+        <img src="images/horse-admi.jpg" alt="Admi">
+        <span style="position:absolute;bottom:0.3rem;left:50%;transform:translateX(-50%);font-size:0.55rem;letter-spacing:0.1em;color:rgba(184,151,90,0.4);white-space:nowrap;">horse-admi.jpg</span>
+      </div>
+      <div class="past-name">Admi</div>
+      <div class="past-years">2009 – 2013</div>
+      <p class="past-desc fi">Eestinhevonen. Koulutin itse. 8v hyppi 110–120 cm. Kilpailimme 100 cm ja HeA.</p>
+      <p class="past-desc en">Estonian horse. Self-trained. Age 8 was jumping 110–120 cm. Competed at 100 cm and HeA.</p>
+    </div>
+    <div class="past-horse-card reveal delay-2">
+      <div class="past-horse-img img-placeholder">
+        <!-- Image file: images/horse-diina.jpg -->
+        <img src="images/horse-diina.jpg" alt="Diina">
+        <span style="position:absolute;bottom:0.3rem;left:50%;transform:translateX(-50%);font-size:0.55rem;letter-spacing:0.1em;color:rgba(184,151,90,0.4);white-space:nowrap;">horse-diina.jpg</span>
+      </div>
+      <div class="past-name">Diina</div>
+      <div class="past-years">2012 – 2015</div>
+      <p class="past-desc fi">Kilpailimme 100 cm, HeA ja kenttäratsastuksessa harrastetasolla.</p>
+      <p class="past-desc en">Competed at 100 cm, HeA and eventing at amateur level.</p>
+    </div>
+    <div class="past-horse-card reveal delay-3">
+      <div class="past-horse-img img-placeholder">
+        <!-- Image file: images/horse-vikke.jpg -->
+        <img src="images/horse-vikke.jpg" alt="Vikke">
+        <span style="position:absolute;bottom:0.3rem;left:50%;transform:translateX(-50%);font-size:0.55rem;letter-spacing:0.1em;color:rgba(184,151,90,0.4);white-space:nowrap;">horse-vikke.jpg</span>
+      </div>
+      <div class="past-name">Vikke</div>
+      <div class="past-years">2015 – 2024</div>
+      <p class="past-desc fi">Eestinhevonen, ori. Laukkapiruetit, piaffe, näyttely. Oppilaani kilpailivat 80 cm.</p>
+      <p class="past-desc en">Estonian stallion. Canter pirouettes, piaffe, shows. Students competed at 80 cm.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div>
+      <div class="footer-brand-name">Ronya Sane</div>
+      <div class="footer-brand-sub fi">Tmi · Hevosalan palvelut</div>
+      <div class="footer-brand-sub en">Sole trader · Equestrian services</div>
+      <p class="footer-tagline fi">"En tiedä mitään parempaa kuin tunne, kun onnistuu jossain hevosen koulutuksessa."</p>
+      <p class="footer-tagline en">"I know nothing better than the feeling of succeeding in training a horse."</p>
+    </div>
+    <div>
+      <div class="footer-col-title fi">Sivut</div>
+      <div class="footer-col-title en">Pages</div>
+      <ul class="footer-links fi"><li><a href="index.html">Etusivu</a></li><li><a href="about.html">Minusta</a></li><li><a href="horses.html">Hevoset</a></li><li><a href="services.html">Palvelut</a></li><li><a href="contact.html">Yhteystiedot</a></li></ul>
+      <ul class="footer-links en"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="horses.html">Horses</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title fi">Yhteystiedot</div>
+      <div class="footer-col-title en">Contact</div>
+      <div class="footer-contact-item"><div class="footer-contact-item-icon">📍</div><div class="footer-contact-item-text">Degerby, Inkoo</div></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Tmi Ronya Sane</div>
+    <div class="footer-copy fi">Kaikki oikeudet pidätetään</div>
+    <div class="footer-copy en">All rights reserved</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

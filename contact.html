@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yhteystiedot – RonyaSane</title>
+  <meta name="description" content="Ota yhteyttä Ronya Saneen. Hevosalan palvelut Inkoossa.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    /* Info side */
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid rgba(27,43,30,0.07);
+    }
+
+    .contact-info-item:last-child { border-bottom: none; }
+
+    .ci-icon {
+      width: 44px; height: 44px;
+      border: 1px solid rgba(184,151,90,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .ci-label {
+      font-size: 0.64rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+      margin-bottom: 0.3rem;
+    }
+
+    .ci-value {
+      font-size: 0.9rem;
+      color: var(--text-body);
+      line-height: 1.65;
+    }
+
+    /* Form */
+    .contact-form {
+      background: var(--forest);
+      padding: 3.5rem;
+    }
+
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-subtitle {
+      font-size: 0.8rem;
+      color: rgba(245,240,232,0.35);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .form-group label {
+      font-size: 0.64rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.3);
+      font-weight: 400;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(184,151,90,0.15);
+      color: var(--cream);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      padding: 0.85rem 1rem;
+      outline: none;
+      width: 100%;
+      resize: vertical;
+      transition: border-color 0.3s;
+      appearance: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(245,240,232,0.18); }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: rgba(184,151,90,0.45); background: rgba(255,255,255,0.07); }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .submit-btn {
+      background: var(--gold);
+      border: none;
+      color: var(--forest);
+      font-family: 'Jost', sans-serif;
+      font-weight: 500;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 1.05rem 2.5rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      margin-top: 0.5rem;
+    }
+
+    .submit-btn:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(184,151,90,0.3);
+    }
+
+    .form-cancel-note {
+      font-size: 0.72rem;
+      color: rgba(245,240,232,0.22);
+      line-height: 1.7;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    /* Success message */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .form-success.show { display: block; }
+
+    .form-success-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+    .form-success-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--cream);
+    }
+
+    /* Map placeholder -->  */
+    .map-section { background: var(--forest); padding: 0; }
+    .map-placeholder {
+      width: 100%;
+      height: 320px;
+      background: var(--moss);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.8rem;
+      color: rgba(245,240,232,0.25);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-top: 1px solid rgba(184,151,90,0.1);
+    }
+
+    .map-placeholder-emoji { font-size: 2rem; opacity: 0.3; }
+
+    /* Location fact strip */
+    .location-strip {
+      background: var(--warm-dark);
+      padding: 2.5rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .location-fact {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.78rem;
+      color: rgba(245,240,232,0.35);
+    }
+
+    .location-fact strong { color: var(--gold); font-weight: 400; }
+
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .contact-form { padding: 2.5rem; }
+    }
+
+    @media (max-width: 500px) {
+      .form-row { grid-template-columns: 1fr; }
+      .location-strip { gap: 1.5rem; flex-direction: column; align-items: flex-start; padding: 2rem 5%; }
+    }
+  </style>
+</head>
+<body class="lang-fi">
+
+<div id="page-transition" class="page-transition"></div>
+
+<header class="site-header">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-img-fallback">🐴</div>
+    <div>
+      <div class="nav-logo-text">RonyaSane</div>
+      <div class="nav-logo-sub fi">Hevosalan palvelut</div>
+      <div class="nav-logo-sub en">Equestrian Services</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="fi">Etusivu</a><a href="index.html" class="en">Home</a></li>
+    <li><a href="about.html" class="fi">Minusta</a><a href="about.html" class="en">About</a></li>
+    <li><a href="horses.html" class="fi">Hevoset</a><a href="horses.html" class="en">Horses</a></li>
+    <li><a href="services.html" class="fi">Palvelut</a><a href="services.html" class="en">Services</a></li>
+    <li><a href="contact.html" class="fi">Yhteystiedot</a><a href="contact.html" class="en">Contact</a></li>
+  </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="fi">FI</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+  <button class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<nav class="nav-drawer">
+  <a href="index.html" class="fi">Etusivu</a><a href="index.html" class="en">Home</a>
+  <a href="about.html" class="fi">Minusta</a><a href="about.html" class="en">About</a>
+  <a href="horses.html" class="fi">Hevoset</a><a href="horses.html" class="en">Horses</a>
+  <a href="services.html" class="fi">Palvelut &amp; hinnasto</a><a href="services.html" class="en">Services &amp; pricing</a>
+  <a href="contact.html" class="fi">Yhteystiedot</a><a href="contact.html" class="en">Contact</a>
+  <div class="nav-drawer-lang">
+    <button class="lang-btn" data-lang="fi">FI</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="page-eyebrow fi">Tmi Ronya Sane · Degerby, Inkoo</div>
+    <div class="page-eyebrow en">Tmi Ronya Sane · Degerby, Inkoo</div>
+    <h1 class="page-title fi">Ota <em>yhteyttä</em></h1>
+    <h1 class="page-title en">Get in <em>touch</em></h1>
+    <div class="page-hero-line"></div>
+  </div>
+</div>
+
+<!-- CONTACT SECTION -->
+<section class="section" style="background:var(--ivory);">
+  <div class="contact-layout">
+
+    <!-- Left: Info -->
+    <div class="reveal-left">
+      <div class="section-label fi">Yhteystiedot</div>
+      <div class="section-label en">Contact details</div>
+      <h2 class="section-title fi" style="margin-bottom:0.5rem;">Otetaan <em>yhteyttä</em></h2>
+      <h2 class="section-title en" style="margin-bottom:0.5rem;">Let's <em>connect</em></h2>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-style:italic; color:var(--text-light); margin-bottom:2.5rem; line-height:1.7;" class="fi">
+        Kysy rohkeasti myös palveluista, joita ei ole sivuillani mainittu — yhdessä keksitään sopiva ratkaisu.
+      </p>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-style:italic; color:var(--text-light); margin-bottom:2.5rem; line-height:1.7;" class="en">
+        Don't hesitate to ask about services not listed on these pages — together we'll find the right solution.
+      </p>
+
+      <div class="contact-info-item">
+        <div class="ci-icon">📍</div>
+        <div>
+          <div class="ci-label fi">Sijainti</div>
+          <div class="ci-label en">Location</div>
+          <div class="ci-value">Degerby, Inkoo<br><span class="fi">Kopparnäsin virkistysalueen lähellä</span><span class="en">Near Kopparnäs recreational area</span></div>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="ci-icon">🏢</div>
+        <div>
+          <div class="ci-label fi">Yritys</div>
+          <div class="ci-label en">Business</div>
+          <div class="ci-value">Tmi Ronya Sane<br><span class="fi">Y-tunnus saatavilla pyydettäessä</span><span class="en">Business ID available on request</span></div>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="ci-icon">🛡️</div>
+        <div>
+          <div class="ci-label fi">Vakuutukset</div>
+          <div class="ci-label en">Insurance</div>
+          <div class="ci-value fi">Vastuu- ja oikeusturvavakuutus voimassa.<br>Suosittelemme asiakkaille omia vapaa-ajan tapaturmavakuutuksia.</div>
+          <div class="ci-value en">Liability &amp; legal expenses insurance in force.<br>We recommend clients have their own personal leisure accident insurance.</div>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="ci-icon">💳</div>
+        <div>
+          <div class="ci-label fi">Maksutavat</div>
+          <div class="ci-label en">Payment</div>
+          <div class="ci-value fi">Käteinen · Mobile Pay · Tiliirto<br>Laskutus yrityksille</div>
+          <div class="ci-value en">Cash · Mobile Pay · Bank transfer<br>Invoicing for companies</div>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="ci-icon">⚠️</div>
+        <div>
+          <div class="ci-label fi">Peruutukset</div>
+          <div class="ci-label en">Cancellations</div>
+          <div class="ci-value fi">Peruutus viimeistään 24h ennen — myöhempi peruutus: 50% hinnasta</div>
+          <div class="ci-value en">Cancel at least 24h in advance — later cancellation: 50% fee applies</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Form -->
+    <div class="contact-form reveal-right">
+      <div class="form-title fi">Lähetä viesti</div>
+      <div class="form-title en">Send a message</div>
+      <p class="form-subtitle fi">Vastaan mahdollisimman pian. Voit myös pyytää tarjouksen!</p>
+      <p class="form-subtitle en">I'll reply as soon as possible. You can also request a quote!</p>
+
+      <div id="contact-form-inner">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="fi">Nimi *</label>
+            <label class="en">Name *</label>
+            <input type="text" id="name" placeholder="Ronya Sane" required>
+          </div>
+          <div class="form-group">
+            <label class="fi">Sähköposti *</label>
+            <label class="en">Email *</label>
+            <input type="email" id="email" placeholder="sinä@email.fi" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="fi">Puhelinnumero</label>
+          <label class="en">Phone number</label>
+          <input type="tel" id="phone" placeholder="+358 40 123 4567">
+        </div>
+
+        <div class="form-group">
+          <label class="fi">Palvelu</label>
+          <label class="en">Service</label>
+          <select id="service">
+            <option value="" class="fi">Valitse palvelu (valinnainen)</option>
+            <option value="" class="en">Select a service (optional)</option>
+            <option value="yksityisvalmennus" class="fi">Yksityisvalmennus</option>
+            <option value="private-coaching" class="en">Private coaching</option>
+            <option value="ryhmävalmennus" class="fi">Ryhmävalmennus</option>
+            <option value="group-coaching" class="en">Group coaching</option>
+            <option value="ratsastustunti" class="fi">Ratsastustunti</option>
+            <option value="riding-lesson" class="en">Riding lesson</option>
+            <option value="talutusratsastus" class="fi">Talutusratsastus</option>
+            <option value="led-rides" class="en">Led rides</option>
+            <option value="koulutus-taysihoito" class="fi">Koulutus-täysihoito</option>
+            <option value="training-fullboard" class="en">Training full board</option>
+            <option value="hevosen-vierailu" class="fi">Hevosen vierailu / tapahtuma</option>
+            <option value="horse-visit" class="en">Horse visit / event</option>
+            <option value="ponisynttarit" class="fi">Ponisynttärit</option>
+            <option value="pony-party" class="en">Pony birthday party</option>
+            <option value="ratsutus" class="fi">Ratsutus / koulutus</option>
+            <option value="riding-in" class="en">Riding-in / training</option>
+            <option value="lomitus" class="fi">Lomitus / apukädet</option>
+            <option value="stable-help" class="en">Stable help</option>
+            <option value="muu" class="fi">Muu / Kysy lisää</option>
+            <option value="other" class="en">Other / Ask more</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="fi">Viesti *</label>
+          <label class="en">Message *</label>
+          <textarea id="message" rows="5" placeholder="" required></textarea>
+        </div>
+
+        <button class="submit-btn fi" onclick="submitForm()">Lähetä viesti →</button>
+        <button class="submit-btn en" onclick="submitForm()">Send message →</button>
+
+        <p class="form-cancel-note fi">Muistathan peruuttaa varatun ajan viimeistään 24h ennen — muuten perimme 50% palvelun hinnasta.</p>
+        <p class="form-cancel-note en">Please cancel at least 24h before your appointment — late cancellation incurs a 50% fee.</p>
+      </div>
+
+      <div class="form-success" id="form-success">
+        <div class="form-success-icon">✉️</div>
+        <div class="form-success-text fi">Kiitos viestistäsi!<br><span style="font-size:1rem; opacity:0.6;">Palaan sinulle pian.</span></div>
+        <div class="form-success-text en">Thank you for your message!<br><span style="font-size:1rem; opacity:0.6;">I'll be in touch soon.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP / LOCATION -->
+<div class="map-section">
+  <!-- Replace this block with a real Google Maps embed if desired -->
+  <!-- Example: <iframe src="https://www.google.com/maps/embed?pb=..." width="100%" height="320" style="border:0;" allowfullscreen loading="lazy"></iframe> -->
+  <div class="map-placeholder">
+    <div class="map-placeholder-emoji">🗺️</div>
+    <span class="fi">Kartta — lisää Google Maps upotus tähän</span>
+    <span class="en">Map — add Google Maps embed here</span>
+  </div>
+</div>
+
+<!-- LOCATION STRIP -->
+<div class="location-strip">
+  <div class="location-fact">
+    📍 <span>Degerby, <strong>Inkoo</strong></span>
+  </div>
+  <div class="location-fact">
+    🌲 <span class="fi">Kopparnäsin <strong>virkistysalue</strong> lähellä</span><span class="en">Near <strong>Kopparnäs</strong> recreational area</span>
+  </div>
+  <div class="location-fact">
+    🏟️ <span class="fi"><strong>Valaistu</strong> ratsastuskenttä</span><span class="en"><strong>Floodlit</strong> riding arena</span>
+  </div>
+  <div class="location-fact">
+    🚗 <span class="fi">Vierailut <strong>80 km</strong> säteellä</span><span class="en">Visits within <strong>80 km</strong></span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div>
+      <div class="footer-brand-name">Ronya Sane</div>
+      <div class="footer-brand-sub fi">Tmi · Hevosalan palvelut</div>
+      <div class="footer-brand-sub en">Sole trader · Equestrian services</div>
+      <p class="footer-tagline fi">"Kysy rohkeasti myös palveluista, joita ei ole mainittu sivuillani!"</p>
+      <p class="footer-tagline en">"Don't hesitate to ask about services not listed on these pages!"</p>
+    </div>
+    <div>
+      <div class="footer-col-title fi">Sivut</div>
+      <div class="footer-col-title en">Pages</div>
+      <ul class="footer-links fi"><li><a href="index.html">Etusivu</a></li><li><a href="about.html">Minusta</a></li><li><a href="horses.html">Hevoset</a></li><li><a href="services.html">Palvelut</a></li><li><a href="contact.html">Yhteystiedot</a></li></ul>
+      <ul class="footer-links en"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="horses.html">Horses</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title fi">Sijainti</div>
+      <div class="footer-col-title en">Location</div>
+      <div class="footer-contact-item"><div class="footer-contact-item-icon">📍</div><div class="footer-contact-item-text">Degerby, Inkoo<br><span class="fi">Uusimaa, Suomi</span><span class="en">Uusimaa, Finland</span></div></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Tmi Ronya Sane · Degerby, Inkoo</div>
+    <div class="footer-copy fi">Kaikki oikeudet pidätetään</div>
+    <div class="footer-copy en">All rights reserved</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  function submitForm() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    if (!name || !email || !message) {
+      // Simple validation highlight
+      [name, email, message].forEach((v, i) => {
+        const ids = ['name', 'email', 'message'];
+        const el = document.getElementById(ids[i]);
+        if (!v) {
+          el.style.borderColor = 'rgba(200,80,80,0.5)';
+          setTimeout(() => el.style.borderColor = '', 2000);
+        }
+      });
+      return;
+    }
+    document.getElementById('contact-form-inner').style.display = 'none';
+    document.getElementById('form-success').classList.add('show');
+    // To wire up a real backend, replace this with a fetch() to your form handler.
+  }
+</script>
+</body>
+</html>
