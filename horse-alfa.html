@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .horse-hero {
+      min-height: 60vh;
+      background: var(--forest);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8rem 6% 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .horse-hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+    }
+    .horse-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,26,16,0.95) 0%, rgba(15,26,16,0.3) 60%, transparent 100%);
+    }
+    .horse-hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .horse-hero-status {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      margin-bottom: 1.2rem;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--gold);
+    }
+    .status-dot.grey { background: rgba(180,170,150,0.4); }
+    .status-label {
+      font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); font-weight: 400;
+    }
+    .status-label.past { color: rgba(245,240,232,0.35); }
+    .horse-hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      font-weight: 300; color: var(--cream); line-height: 0.95;
+      margin-bottom: 0.5rem;
+    }
+    .horse-hero-breed {
+      font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); font-weight: 400; margin-bottom: 1.5rem;
+    }
+    .horse-hero-quote {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.15rem; color: rgba(245,240,232,0.5);
+      max-width: 540px; line-height: 1.65;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      transition: gap 0.3s;
+      margin-bottom: 3rem;
+    }
+    .back-link:hover { gap: 0.8rem; }
+    .horse-detail-grid {
+      display: grid; grid-template-columns: 1fr 1.5fr;
+      gap: 4rem; align-items: start; margin-top: 4rem;
+    }
+    .horse-main-img {
+      aspect-ratio: 4/3; overflow: hidden; position: relative;
+    }
+    .horse-main-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .horse-main-img:hover img { transform: scale(1.03); }
+    .horse-img-accent2 {
+      position: absolute; bottom: -10px; right: -10px;
+      width: 50%; height: 50%;
+      border-right: 1px solid rgba(184,151,90,0.3);
+      border-bottom: 1px solid rgba(184,151,90,0.3);
+      pointer-events: none;
+    }
+    .horse-gallery {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem; margin-top: 0.5rem;
+    }
+    .horse-gallery-img {
+      aspect-ratio: 1/1; overflow: hidden;
+    }
+    .horse-gallery-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(0.85); transition: filter 0.4s, transform 0.4s;
+    }
+    .horse-gallery-img:hover img { filter: brightness(1); transform: scale(1.05); }
+    .horse-bio-section h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 300; color: var(--forest);
+      margin: 2rem 0 0.8rem; line-height: 1.2;
+    }
+    .horse-bio-section p {
+      font-size: 0.9rem; line-height: 1.9; color: var(--text-light); margin-bottom: 1rem;
+    }
+    .horse-tags {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem;
+    }
+    .horse-tag {
+      font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+      border: 1px solid rgba(27,43,30,0.14); padding: 0.35rem 0.85rem;
+      color: var(--text-light);
+    }
+    .horse-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 2rem 6%; border-top: 1px solid rgba(27,43,30,0.08);
+      background: var(--ivory);
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .horse-nav-link {
+      display: flex; align-items: center; gap: 0.6rem;
+      text-decoration: none; color: var(--text-light);
+      font-size: 0.78rem; transition: color 0.3s;
+    }
+    .horse-nav-link:hover { color: var(--forest); }
+    .horse-nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; color: var(--forest); font-weight: 300;
+    }
+    .horse-nav-center {
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-light); text-align: center;
+    }
+    .horse-nav-center a {
+      color: var(--gold); text-decoration: none;
+    }
+    @media (max-width: 768px) {
+      .horse-detail-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .horse-gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+  <title>Alfa – RonyaSane</title>
+</head>
+<body class="lang-fi">
+
+<div id="page-transition" class="page-transition"></div>
+<header class="site-header">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-img-fallback">🐴</div>
+    <div>
+      <div class="nav-logo-text">RonyaSane</div>
+      <div class="nav-logo-sub fi">Hevosalan palvelut</div>
+      <div class="nav-logo-sub en">Equestrian Services</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="fi">Etusivu</a><a href="index.html" class="en">Home</a></li>
+    <li><a href="about.html" class="fi">Minusta</a><a href="about.html" class="en">About</a></li>
+    <li><a href="horses.html" class="fi">Hevoset</a><a href="horses.html" class="en">Horses</a></li>
+    <li><a href="services.html" class="fi">Palvelut</a><a href="services.html" class="en">Services</a></li>
+    <li><a href="contact.html" class="fi">Yhteystiedot</a><a href="contact.html" class="en">Contact</a></li>
+  </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="fi">FI</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+  <button class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+<nav class="nav-drawer">
+  <a href="index.html" class="fi">Etusivu</a><a href="index.html" class="en">Home</a>
+  <a href="about.html" class="fi">Minusta</a><a href="about.html" class="en">About</a>
+  <a href="horses.html" class="fi">Hevoset</a><a href="horses.html" class="en">Horses</a>
+  <a href="services.html" class="fi">Palvelut &amp; hinnasto</a><a href="services.html" class="en">Services &amp; pricing</a>
+  <a href="contact.html" class="fi">Yhteystiedot</a><a href="contact.html" class="en">Contact</a>
+  <div class="nav-drawer-lang">
+    <button class="lang-btn" data-lang="fi">FI</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+</nav>
+
+
+<!-- HERO -->
+<div class="horse-hero">
+  <img src="images/horse-alfa.jpg" alt="Alfa" class="horse-hero-img">
+  <div class="horse-hero-overlay"></div>
+  <div class="horse-hero-content">
+    <a href="horses.html" class="back-link fi">← Kaikki hevoset</a>
+    <a href="horses.html" class="back-link en">← All horses</a>
+    <div class="horse-hero-status">
+      <div class="status-dot grey"></div>
+      <div class="status-label past fi">Muistot ikuisia</div>
+      <div class="status-label past en">Forever remembered</div>
+    </div>
+    <div class="horse-hero-name">Alfa</div>
+    <div class="horse-hero-breed fi">Connemararisteytys · 16-v. hankittaessa · 2008 – 2012</div>
+    <div class="horse-hero-breed en">Connemara cross · 16 years old when acquired · 2008 – 2012</div>
+    <div class="horse-hero-quote fi">"Opetti minulle hauskanpidon, hyppäämisen ja kisaamisen salat."</div>
+    <div class="horse-hero-quote en">"Taught me the joys of fun, jumping and competing."</div>
+  </div>
+</div>
+
+<!-- DETAIL -->
+<section class="section" style="background:var(--ivory);">
+  <div class="horse-detail-grid">
+    <div>
+      <div class="horse-main-img reveal-left">
+        <img src="images/horse-alfa.jpg" alt="Alfa">
+        <div class="horse-img-accent2"></div>
+      </div>
+      <div class="horse-gallery reveal-left">
+        <div class="horse-gallery-img">
+          <img src="images/horse-alfa-2.jpg" alt="Alfa" loading="lazy">
+        </div>
+        <div class="horse-gallery-img">
+          <img src="images/horse-alfa-3.jpg" alt="Alfa" loading="lazy">
+        </div>
+        <div class="horse-gallery-img">
+          <img src="images/horse-alfa-4.jpg" alt="Alfa" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <div class="horse-bio-section reveal-right">
+      <div class="section-label fi">Tarina</div>
+      <div class="section-label en">Story</div>
+      <h2 class="section-title" style="margin-bottom:1.5rem;">Alfa<em style="display:block;font-size:1.2rem;margin-top:0.3rem;"> Connemararisteytys · 16-v. hankittaessa</em></h2>
+      <p class="fi">Ensimmäinen omani — Alfa oli 16-vuotias connemararisteytys, joka saapui talliini kesällä 2008 kun olin itse 10-vuotias.</p><p class="fi">Alfa opetti minulle kaiken tärkeimmän: miten nauretaan, miten hypätään, ja miten kisataan ilolla. Hän oli kärsivällinen, rohkea ja täynnä elämäniloa.</p><p class="fi">Alfan ikä alkoi painaa syksyllä 2012 ja hänen oli aika päästä vihreämmille laitumille. Hän jättää jälkensä aina sydämeeni.</p>
+      <p class="en">My very first — Alfa was a 16-year-old Connemara cross who arrived at my stable in summer 2008 when I was 10 years old.</p><p class="en">Alfa taught me everything that matters most: how to laugh, how to jump, and how to compete with joy. He was patient, brave and full of life.</p><p class="en">Alfa's age began to tell in autumn 2012 and it was time for him to move on to greener pastures. He will always hold a place in my heart.</p>
+      <div class="horse-tags fi"><span class="horse-tag">Connemararisteytys</span><span class="horse-tag">Ensimmäinen omani</span><span class="horse-tag">Hyppely</span><span class="horse-tag">Kilpailu</span><span class="horse-tag">2008–2012</span></div>
+      <div class="horse-tags en"><span class="horse-tag">Connemara cross</span><span class="horse-tag">My first horse</span><span class="horse-tag">Jumping</span><span class="horse-tag">Competition</span><span class="horse-tag">2008–2012</span></div>
+      <div style="margin-top:2.5rem;">
+        <a href="contact.html" class="btn btn-primary fi">Ota yhteyttä →</a>
+        <a href="contact.html" class="btn btn-primary en">Get in touch →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREV / NEXT NAV -->
+<div class="horse-nav">
+  <a href="horse-vikke.html" class="horse-nav-link">← <span class="horse-nav-name">Vikke</span></a>
+  <div class="horse-nav-center">
+    <a href="horses.html" class="fi">← Kaikki hevoset</a>
+    <a href="horses.html" class="en">← All horses</a>
+  </div>
+  <a href="horse-admi.html" class="horse-nav-link"><span class="horse-nav-name">Admi</span> →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div>
+      <div class="footer-brand-name">Ronya Sane</div>
+      <div class="footer-brand-sub fi">Tmi · Hevosalan palvelut</div>
+      <div class="footer-brand-sub en">Sole trader · Equestrian services</div>
+    </div>
+    <div>
+      <div class="footer-col-title fi">Sivut</div>
+      <div class="footer-col-title en">Pages</div>
+      <ul class="footer-links fi"><li><a href="index.html">Etusivu</a></li><li><a href="about.html">Minusta</a></li><li><a href="horses.html">Hevoset</a></li><li><a href="services.html">Palvelut</a></li><li><a href="contact.html">Yhteystiedot</a></li></ul>
+      <ul class="footer-links en"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="horses.html">Horses</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title fi">Yhteystiedot</div>
+      <div class="footer-col-title en">Contact</div>
+      <div class="footer-contact-item"><div class="footer-contact-item-icon">📍</div><div class="footer-contact-item-text">Degerby, Inkoo</div></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Tmi Ronya Sane · Degerby, Inkoo</div>
+    <div class="footer-copy fi">Kaikki oikeudet pidätetään</div>
+    <div class="footer-copy en">All rights reserved</div>
+  </div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>

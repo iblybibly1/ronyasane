@@ -176,6 +176,24 @@
 
     .past-desc { font-size: 0.8rem; color: var(--text-light); line-height: 1.7; }
 
+    .past-horse-link {
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+
+    .past-view {
+      margin-top: 1rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+      transition: letter-spacing 0.3s;
+    }
+
+    .past-horse-card:hover .past-view { letter-spacing: 0.25em; }
+
     @media (max-width: 900px) {
       .horse-profile { grid-template-columns: 1fr; gap: 2rem; }
       .horse-profile.reverse { direction: ltr; }
@@ -252,10 +270,10 @@
   <!-- TAKKU -->
   <div class="horse-profile reveal">
     <div class="horse-img-wrap">
-      <div class="horse-img-box img-placeholder">
+      <div class="horse-img-box">
         <!-- Image file: images/horse-takku.jpg -->
         <img src="images/horse-takku.jpg" alt="Takku" class="horse-img">
-        <span style="position:absolute;bottom:0.5rem;left:50%;transform:translateX(-50%);font-size:0.6rem;letter-spacing:0.1em;color:rgba(184,151,90,0.5);white-space:nowrap;">horse-takku.jpg</span>
+        
       </div>
       <div class="horse-img-accent"></div>
       <div class="horse-year-badge">2017 →</div>
@@ -285,16 +303,20 @@
         <span class="highlight-tag">Beginner-friendly</span>
         <span class="highlight-tag">Competition experienced</span>
       </div>
+      <div style="margin-top:1.8rem;">
+        <a href="horse-takku.html" class="btn btn-outline fi">Takun sivu →</a>
+        <a href="horse-takku.html" class="btn btn-outline en">Takku's profile →</a>
+      </div>
     </div>
   </div>
 
   <!-- BESO -->
   <div class="horse-profile reverse reveal">
     <div class="horse-img-wrap">
-      <div class="horse-img-box img-placeholder">
+      <div class="horse-img-box">
         <!-- Image file: images/horse-beso.jpg -->
         <img src="images/horse-beso.jpg" alt="Beso" class="horse-img">
-        <span style="position:absolute;bottom:0.5rem;left:50%;transform:translateX(-50%);font-size:0.6rem;letter-spacing:0.1em;color:rgba(184,151,90,0.5);white-space:nowrap;">horse-beso.jpg</span>
+        
       </div>
       <div class="horse-img-accent"></div>
       <div class="horse-year-badge">2021 →</div>
@@ -324,16 +346,20 @@
         <span class="highlight-tag">Competing</span>
         <span class="highlight-tag">Great potential</span>
       </div>
+      <div style="margin-top:1.8rem;">
+        <a href="horse-beso.html" class="btn btn-outline fi">Beson sivu →</a>
+        <a href="horse-beso.html" class="btn btn-outline en">Beso's profile →</a>
+      </div>
     </div>
   </div>
 
   <!-- ELVIS -->
   <div class="horse-profile reveal">
     <div class="horse-img-wrap">
-      <div class="horse-img-box img-placeholder">
+      <div class="horse-img-box">
         <!-- Image file: images/horse-elvis.jpg -->
         <img src="images/horse-elvis.jpg" alt="Elvis" class="horse-img">
-        <span style="position:absolute;bottom:0.5rem;left:50%;transform:translateX(-50%);font-size:0.6rem;letter-spacing:0.1em;color:rgba(184,151,90,0.5);white-space:nowrap;">horse-elvis.jpg</span>
+        
       </div>
       <div class="horse-img-accent"></div>
       <div class="horse-year-badge">2020 →</div>
@@ -361,6 +387,10 @@
         <span class="highlight-tag">Carriage</span>
         <span class="highlight-tag">Child-friendly</span>
       </div>
+      <div style="margin-top:1.8rem;">
+        <a href="horse-elvis.html" class="btn btn-outline fi">Elviksen sivu →</a>
+        <a href="horse-elvis.html" class="btn btn-outline en">Elvis's profile →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -378,48 +408,56 @@
 
   <div class="past-horses-grid">
     <div class="past-horse-card reveal">
-      <div class="past-horse-img img-placeholder">
-        <!-- Image file: images/horse-alfa.jpg -->
-        <img src="images/horse-alfa.jpg" alt="Alfa">
-        <span style="position:absolute;bottom:0.3rem;left:50%;transform:translateX(-50%);font-size:0.55rem;letter-spacing:0.1em;color:rgba(184,151,90,0.4);white-space:nowrap;">horse-alfa.jpg</span>
-      </div>
-      <div class="past-name">Alfa</div>
-      <div class="past-years">2008 – 2012</div>
-      <p class="past-desc fi">Connemararisteytys. Ensimmäinen omani. Opetti hauskanpidon, hyppäämisen ja kisaamisen.</p>
-      <p class="past-desc en">Connemara cross. My very first. Taught me fun, jumping and competing.</p>
+      <a href="horse-alfa.html" class="past-horse-link">
+        <div class="past-horse-img">
+          <img src="images/horse-alfa.jpg" alt="Alfa">
+        </div>
+        <div class="past-name">Alfa</div>
+        <div class="past-years">2008 – 2012</div>
+        <p class="past-desc fi">Connemararisteytys. Ensimmäinen omani. Opetti hauskanpidon, hyppäämisen ja kisaamisen.</p>
+        <p class="past-desc en">Connemara cross. My very first. Taught me fun, jumping and competing.</p>
+        <div class="past-view fi">Lue tarina →</div>
+        <div class="past-view en">Read story →</div>
+      </a>
     </div>
     <div class="past-horse-card reveal delay-1">
-      <div class="past-horse-img img-placeholder">
-        <!-- Image file: images/horse-admi.jpg -->
-        <img src="images/horse-admi.jpg" alt="Admi">
-        <span style="position:absolute;bottom:0.3rem;left:50%;transform:translateX(-50%);font-size:0.55rem;letter-spacing:0.1em;color:rgba(184,151,90,0.4);white-space:nowrap;">horse-admi.jpg</span>
-      </div>
-      <div class="past-name">Admi</div>
-      <div class="past-years">2009 – 2013</div>
-      <p class="past-desc fi">Eestinhevonen. Koulutin itse. 8v hyppi 110–120 cm. Kilpailimme 100 cm ja HeA.</p>
-      <p class="past-desc en">Estonian horse. Self-trained. Age 8 was jumping 110–120 cm. Competed at 100 cm and HeA.</p>
+      <a href="horse-admi.html" class="past-horse-link">
+        <div class="past-horse-img">
+          <img src="images/horse-admi.jpg" alt="Admi">
+        </div>
+        <div class="past-name">Admi</div>
+        <div class="past-years">2009 – 2013</div>
+        <p class="past-desc fi">Eestinhevonen. Koulutin itse. 8v hyppi 110–120 cm. Kilpailimme 100 cm ja HeA.</p>
+        <p class="past-desc en">Estonian horse. Self-trained. Age 8 was jumping 110–120 cm. Competed at 100 cm and HeA.</p>
+        <div class="past-view fi">Lue tarina →</div>
+        <div class="past-view en">Read story →</div>
+      </a>
     </div>
     <div class="past-horse-card reveal delay-2">
-      <div class="past-horse-img img-placeholder">
-        <!-- Image file: images/horse-diina.jpg -->
-        <img src="images/horse-diina.jpg" alt="Diina">
-        <span style="position:absolute;bottom:0.3rem;left:50%;transform:translateX(-50%);font-size:0.55rem;letter-spacing:0.1em;color:rgba(184,151,90,0.4);white-space:nowrap;">horse-diina.jpg</span>
-      </div>
-      <div class="past-name">Diina</div>
-      <div class="past-years">2012 – 2015</div>
-      <p class="past-desc fi">Kilpailimme 100 cm, HeA ja kenttäratsastuksessa harrastetasolla.</p>
-      <p class="past-desc en">Competed at 100 cm, HeA and eventing at amateur level.</p>
+      <a href="horse-diina.html" class="past-horse-link">
+        <div class="past-horse-img">
+          <img src="images/horse-diina.jpg" alt="Diina">
+        </div>
+        <div class="past-name">Diina</div>
+        <div class="past-years">2012 – 2015</div>
+        <p class="past-desc fi">Kilpailimme 100 cm, HeA ja kenttäratsastuksessa harrastetasolla.</p>
+        <p class="past-desc en">Competed at 100 cm, HeA and eventing at amateur level.</p>
+        <div class="past-view fi">Lue tarina →</div>
+        <div class="past-view en">Read story →</div>
+      </a>
     </div>
     <div class="past-horse-card reveal delay-3">
-      <div class="past-horse-img img-placeholder">
-        <!-- Image file: images/horse-vikke.jpg -->
-        <img src="images/horse-vikke.jpg" alt="Vikke">
-        <span style="position:absolute;bottom:0.3rem;left:50%;transform:translateX(-50%);font-size:0.55rem;letter-spacing:0.1em;color:rgba(184,151,90,0.4);white-space:nowrap;">horse-vikke.jpg</span>
-      </div>
-      <div class="past-name">Vikke</div>
-      <div class="past-years">2015 – 2024</div>
-      <p class="past-desc fi">Eestinhevonen, ori. Laukkapiruetit, piaffe, näyttely. Oppilaani kilpailivat 80 cm.</p>
-      <p class="past-desc en">Estonian stallion. Canter pirouettes, piaffe, shows. Students competed at 80 cm.</p>
+      <a href="horse-vikke.html" class="past-horse-link">
+        <div class="past-horse-img">
+          <img src="images/horse-vikke.jpg" alt="Vikke">
+        </div>
+        <div class="past-name">Vikke</div>
+        <div class="past-years">2015 – 2024</div>
+        <p class="past-desc fi">Eestinhevonen, ori. Laukkapiruetit, piaffe, näyttely. Oppilaani kilpailivat 80 cm.</p>
+        <p class="past-desc en">Estonian stallion. Canter pirouettes, piaffe, shows. Students competed at 80 cm.</p>
+        <div class="past-view fi">Lue tarina →</div>
+        <div class="past-view en">Read story →</div>
+      </a>
     </div>
   </div>
 </section>
